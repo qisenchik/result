@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>结果补语 · Результативные морфемы</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Noto+Serif+SC:wght@500;700;900&family=EB+Garamond:ital,wght@0,500;0,700;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f1e3c8;--paper-deep:#e2cba3;--sheet:#fbf4e6;--parch:#f6ead4;
+  --ink:#362b1f;--ink-soft:rgba(54,43,31,.64);--ink-ghost:rgba(54,43,31,.12);
+  --accent:#b4441c;--accent2:#7c2a35;--gold:#c58a1a;--violet:#6631d7;--rose:#c9938c;--stone:#e7e1d6;
+  --line:rgba(54,43,31,.3);--line-dash:rgba(54,43,31,.11);
+  --ok:#7a5a06;--ok-bg:#f3e2b0;--bad-bg:#f4d6c9;
+  --kai:"Kaiti SC","STKaiti","KaiTi","楷体","BiauKai","Noto Serif SC",serif;
+  --sans:"Nunito Sans",-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --gar:"EB Garamond","Times New Roman",Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.55;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .17 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-thumb{background:rgba(124,42,53,.35);border-radius:10px}
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(to right,var(--line-dash) 1px,transparent 1px),linear-gradient(to bottom,var(--line-dash) 1px,transparent 1px);
+  background-size:72px 72px;mask-image:radial-gradient(ellipse at 50% 30%,black 40%,rgba(0,0,0,.3) 100%)}
+.glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 85% 10%,rgba(197,138,26,.2),transparent 40%),radial-gradient(circle at 5% 90%,rgba(201,147,140,.22),transparent 45%)}
+#sky{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.petal{position:absolute;top:-6vh;opacity:.55;animation:fall linear infinite}
+.petal svg{width:100%;height:100%;display:block;animation:sway ease-in-out infinite alternate}
+@keyframes fall{to{transform:translateY(116vh)}}
+@keyframes sway{from{transform:translateX(-30px) rotate(-40deg)}to{transform:translateX(30px) rotate(50deg)}}
+.spk{position:absolute;width:22px;height:22px;animation:twinkle 3.4s ease-in-out infinite}
+.spk svg{width:100%;height:100%}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.6) rotate(0)}50%{opacity:.85;transform:scale(1) rotate(20deg)}}
+@media (prefers-reduced-motion:reduce){.petal,.spk,#bird{display:none}}
+.wm{position:fixed;right:-30px;bottom:-60px;font-family:var(--kai);font-size:360px;font-weight:900;color:rgba(124,42,53,.05);pointer-events:none;z-index:0;line-height:1}
+
+/* --- верхняя панель --- */
+#bar{position:sticky;top:0;z-index:40;background:rgba(241,227,200,.93);backdrop-filter:blur(8px);border-bottom:1.6px solid var(--ink);padding:9px 24px}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.bar-in .ttl{font-family:var(--kai);font-weight:700;font-size:18px}
+.pg{flex:1;min-width:120px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800}
+.pg .track{flex:1;height:8px;border:1.4px solid var(--ink);position:relative;border-radius:99px;overflow:hidden}
+.pg .track i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--gold),var(--accent));transition:width .4s}
+.tg{border:1.5px solid var(--ink);background:transparent;padding:5px 13px;font-size:12px;font-weight:800;border-radius:999px;cursor:pointer;font-family:var(--sans);transition:.15s;color:var(--ink)}
+.tg:hover,.tg.on{background:var(--ink);color:var(--paper)}
+
+/* --- шапка --- */
+header{position:relative;z-index:2;padding:46px 24px 22px 92px;max-width:1080px;margin:0 auto;min-height:420px}
+.stamp{display:inline-block;border:2.5px solid var(--accent);color:var(--accent);font-weight:800;letter-spacing:.22em;padding:6px 14px;font-size:12px;transform:rotate(-2.5deg);margin-bottom:18px;background:rgba(251,244,230,.4)}
+h1{font-family:var(--kai);font-size:clamp(46px,8vw,88px);line-height:1.02;font-weight:700;position:relative;display:inline-block}
+h1 .latin{font-family:var(--gar);font-style:italic;font-weight:500;font-size:clamp(20px,3vw,30px);letter-spacing:.02em;display:block;margin-top:10px;color:var(--ink-soft)}
+.doodle{position:absolute;left:-8px;right:-14px;bottom:-14px;height:26px;pointer-events:none}
+.doodle path{fill:none;stroke:var(--violet);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 2.2s .5s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.lead{max-width:600px;margin-top:20px;color:var(--ink-soft);font-size:15px}
+.lead i{font-family:var(--gar);font-size:17px;color:var(--ink)}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px;max-width:720px}
+nav a{color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);padding:7px 14px;font-size:13px;font-weight:700;border-radius:999px;transition:.18s;background:rgba(251,244,230,.5)}
+nav a:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+nav a b{font-family:var(--kai);margin-right:6px}
+.hdeco{position:absolute;pointer-events:none}
+.h-rose{right:10px;top:40px;width:120px;transform:rotate(9deg);animation:bob 7s ease-in-out infinite}
+.h-rose .strip{background:#e8dcc4;padding:14px 10px 18px;clip-path:polygon(4% 2%,22% 0,40% 3%,60% 0,82% 2%,100% 0,97% 20%,100% 40%,96% 62%,100% 82%,97% 100%,76% 97%,54% 100%,30% 97%,10% 100%,0 96%,3% 74%,0 50%,4% 28%,0 8%);box-shadow:0 6px 18px rgba(54,43,31,.15)}
+.h-ribbon{right:150px;top:4px;width:84px;animation:bob 9s ease-in-out infinite reverse}
+.h-seal{right:170px;top:250px;width:78px;transform:rotate(-8deg)}
+.h-spk{right:118px;top:300px;width:58px}
+.h-spk path{animation:twinkle 3s ease-in-out infinite}
+.h-spk path:nth-child(2){animation-delay:1.2s}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -10px}}
+#bird{position:absolute;top:120px;left:-180px;width:150px;z-index:3;pointer-events:none;animation:fly 26s linear infinite 2s}
+#bird .wing{transform-origin:62px 60px;animation:flap .9s ease-in-out infinite alternate}
+@keyframes fly{0%{transform:translate(0,0) rotate(-4deg)}50%{transform:translate(70vw,-60px) rotate(3deg)}100%{transform:translate(140vw,20px) rotate(-3deg)}}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.55)}}
+@media (max-width:860px){.h-rose,.h-ribbon,.h-seal,.h-spk{display:none}header{min-height:0}}
+
+main{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 24px 80px 92px}
+section.task{margin-top:76px;position:relative;scroll-margin-top:70px}
+.binder{position:absolute;left:-58px;top:8px;bottom:8px;width:26px;
+  background-image:radial-gradient(circle 7px at 13px 13px,var(--paper-deep) 6px,rgba(54,43,31,.38) 7px,transparent 8px);background-size:26px 88px;background-repeat:repeat-y}
+.sec-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.sec-num{font-family:var(--kai);font-size:20px;font-weight:700;border:1.8px solid var(--ink);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex:none;background:var(--sheet);position:relative}
+.sec-num::after{content:"";position:absolute;inset:-6px;border:1px dashed rgba(102,49,215,.45);border-radius:50%;animation:spin 30s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+h2{font-family:var(--gar);font-size:clamp(25px,4vw,36px);font-weight:700;flex:1;min-width:220px;line-height:1.15}
+h2 .zh{font-family:var(--kai)}
+.tgs{display:flex;gap:6px}
+.mini{border:1.4px solid var(--ink);background:var(--sheet);padding:3px 10px;font-size:11.5px;font-weight:800;border-radius:999px;cursor:pointer;font-family:var(--sans);color:var(--ink)}
+.mini.on{background:var(--accent2);border-color:var(--accent2);color:#fff}
+.sec-sub{color:var(--ink-soft);font-size:16px;max-width:740px;margin-bottom:20px;font-family:var(--gar);font-style:italic;line-height:1.45}
+.sec-sub b{font-style:normal;color:var(--ink)}
+.panel{border:1.8px solid var(--ink);background:rgba(251,244,230,.62);padding:24px;position:relative;box-shadow:6px 6px 0 rgba(124,42,53,.12)}
+.panel::before{content:"";position:absolute;top:-1.8px;left:24px;width:90px;height:5px;background:var(--accent)}
+.panel>.tape{position:absolute;top:-13px;right:38px;width:92px;height:24px;background:rgba(201,147,140,.42);transform:rotate(4deg);border-left:2px dashed rgba(255,255,255,.5);border-right:2px dashed rgba(255,255,255,.5)}
+.shot{margin-top:20px;border:1.4px dashed var(--accent);padding:8px 13px;font-size:12.5px;font-weight:800;color:var(--accent);text-align:center;letter-spacing:.04em;background:rgba(180,68,28,.05)}
+.shot::before{content:"📸 "}
+.subhead{font-family:var(--gar);font-size:23px;font-weight:700;margin:30px 0 12px;border-bottom:1.6px solid var(--ink);padding-bottom:6px;display:flex;align-items:center;gap:10px}
+.subhead .zh{font-family:var(--kai)}
+.subhead::before{content:"";width:16px;height:16px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0 C11 7 13 9 20 10 C13 11 11 13 10 20 C9 13 7 11 0 10 C7 9 9 7 10 0Z' fill='%236631d7'/%3E%3C/svg%3E") center/contain no-repeat}
+.culture{margin-top:18px;border-left:4px solid var(--gold);background:rgba(197,138,26,.1);padding:12px 16px;font-size:14px}
+.culture .ch-t{font-family:var(--kai);font-weight:700;color:var(--accent2);font-size:16px;margin-bottom:4px;display:block}
+.culture b.zh,.culture .zh{font-family:var(--kai);font-size:17px}
+.warn{margin-top:16px;border:1.6px solid var(--accent);background:var(--bad-bg);padding:12px 16px;font-size:14px}
+.warn .h{font-weight:800;color:var(--accent);display:block;margin-bottom:4px}
+.warn ol{padding-left:20px}.warn li{margin:4px 0}
+.zh{font-family:var(--kai)}
+s.zh,.x{color:var(--accent);text-decoration:line-through}
+.foot{font-size:12.5px;color:var(--ink-soft);margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+.foot b{font-family:var(--kai);font-size:15px;color:var(--ink)}
+.ornament{display:flex;justify-content:center;margin:56px 0 -36px;opacity:.75}
+.ornament svg{width:220px;height:30px}
+
+.btn{font-family:var(--sans);font-weight:800;font-size:13px;border:1.6px solid var(--ink);background:var(--sheet);color:var(--ink);padding:8px 16px;cursor:pointer;border-radius:999px;transition:.15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.small{padding:5px 12px;font-size:12px}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.row-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.msg{font-weight:800;font-size:13.5px}
+.msg.ok{color:var(--ok)}.msg.bad{color:var(--accent)}
+.score{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-weight:800;font-size:14px;margin-top:18px}
+.score .bar{flex:1;min-width:130px;height:9px;border:1.5px solid var(--ink);position:relative;border-radius:99px;overflow:hidden}
+.score .bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent);transition:width .4s}
+.shake{animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* пиньинь / перевод */
+.py{color:var(--accent);font-weight:700;font-style:italic}
+.tr{color:var(--ink-soft)}
+.nopy .py{display:none!important}
+.notr .tr{display:none!important}
+
+/* новые слова — точки снизу */
+.nw{-webkit-text-emphasis:filled dot var(--violet);text-emphasis:filled dot var(--violet);-webkit-text-emphasis-position:under;text-emphasis-position:under right;cursor:help;border-radius:3px;transition:background .15s}
+.nw:hover,.nw:focus{background:rgba(102,49,215,.12);outline:none}
+#tip{position:fixed;z-index:90;pointer-events:none;background:var(--sheet);border:1.6px solid var(--ink);box-shadow:4px 4px 0 rgba(102,49,215,.25);padding:8px 12px;min-width:120px;max-width:260px;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;text-align:center}
+#tip.on{opacity:1;transform:none}
+#tip .c{font-family:var(--kai);font-size:28px;font-weight:700;line-height:1.1}
+#tip .p{color:var(--accent);font-weight:800;font-style:italic;font-size:14px}
+#tip .r{font-size:13px;color:var(--ink);line-height:1.3;margin-top:2px}
+em.rc{font-style:normal;color:var(--accent2);font-weight:900}
+
+/* --- словарь --- */
+.dict-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.inp{border:1.6px solid var(--ink);background:var(--sheet);padding:8px 12px;font-size:14px;font-family:var(--sans);outline:none;border-radius:4px;color:var(--ink)}
+.inp:focus{border-color:var(--accent)}
+#dSearch{flex:1;min-width:200px}
+.dtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.dtabs button{border:1.4px solid var(--ink);background:var(--sheet);padding:4px 12px;font-size:12.5px;font-weight:800;border-radius:999px;cursor:pointer;font-family:var(--sans);color:var(--ink)}
+.dtabs button.on{background:var(--ink);color:var(--paper)}
+.dlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;max-height:420px;overflow:auto;padding:2px 4px 2px 2px}
+.dcard{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;border:1.4px solid var(--ink);background:var(--sheet);padding:7px 9px}
+.dcard.imp{border-style:dashed;border-color:var(--accent2)}
+.dcard .dc{font-family:var(--kai);font-size:23px;font-weight:700;line-height:1.15}
+.dcard .meta{font-size:12.5px;line-height:1.3;display:block}
+.star{border:none;background:none;font-size:19px;cursor:pointer;color:rgba(54,43,31,.25)}
+.star.on{color:var(--gold)}
+.bank-head{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.fc-set{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13px;font-weight:700}
+.fc-set select{border:1.4px solid var(--ink);background:var(--sheet);padding:6px 8px;font-family:var(--sans);font-size:13px;color:var(--ink)}
+.fc-set label{display:flex;gap:5px;align-items:center;cursor:pointer}
+.fc-stage{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.fcard{width:min(440px,100%);min-height:210px;perspective:1000px;cursor:pointer}
+.fcard .in{position:relative;width:100%;min-height:210px;transition:transform .5s;transform-style:preserve-3d}
+.fcard.flip .in{transform:rotateY(180deg)}
+.fcard .face{position:absolute;inset:0;backface-visibility:hidden;border:2px solid var(--ink);background:var(--sheet);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;box-shadow:6px 6px 0 rgba(124,42,53,.18)}
+.fcard .back{transform:rotateY(180deg);background:#fff7e8;border-color:var(--accent2)}
+.fcard .big{font-family:var(--kai);font-size:58px;font-weight:700;line-height:1.1}
+.fcard .mid{font-size:21px;font-weight:800}
+.fcard .hint{font-size:12px;color:var(--ink-soft);margin-top:10px}
+.fc-info{font-size:13px;font-weight:700;color:var(--ink-soft)}
+
+/* --- теория --- */
+.rule{border:1.8px solid var(--ink);background:var(--sheet);padding:14px 18px;margin-bottom:16px;font-size:15px;position:relative}
+.rule b{color:var(--accent2)}
+.rule .zh{font-size:19px;font-weight:700}
+.glue{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin:18px 0 8px;min-height:120px}
+.gstage{position:relative;width:300px;height:110px}
+.gch{position:absolute;top:18px;width:74px;height:74px;border:2px solid var(--ink);background:var(--sheet);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--kai);font-size:40px;font-weight:700;box-shadow:4px 4px 0 rgba(124,42,53,.18)}
+.gch small{font-family:var(--sans);font-size:11px;font-weight:800;color:var(--accent);font-style:italic;line-height:1}
+.gch.v{left:40px}
+.gch.r{left:200px;border-color:var(--violet);color:var(--violet);animation:glue 6s ease-in-out infinite}
+.gplus{position:absolute;left:138px;top:36px;font-size:28px;font-weight:800;color:var(--ink-soft);animation:plus 6s ease-in-out infinite}
+.gle{position:absolute;left:200px;top:30px;font-family:var(--kai);font-size:34px;font-weight:700;color:var(--accent);opacity:0;animation:le 6s ease-in-out infinite}
+@keyframes glue{0%,22%{transform:translateX(0)}42%,82%{transform:translateX(-86px)}100%{transform:translateX(0)}}
+@keyframes plus{0%,22%{opacity:1}35%,85%{opacity:0}100%{opacity:1}}
+@keyframes le{0%,48%{opacity:0;transform:translateX(30px)}58%,82%{opacity:1;transform:translateX(0)}92%,100%{opacity:0}}
+.gcap{max-width:400px;font-size:14px}
+.gcap .zh{font-size:20px;font-weight:700}
+.asp{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin:10px 0 6px}
+.asp .tile{perspective:900px;height:150px;cursor:pointer}
+.asp .tin{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.asp .tile.flip .tin{transform:rotateY(180deg)}
+.asp .side{position:absolute;inset:0;backface-visibility:hidden;border:1.6px solid var(--ink);background:var(--sheet);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center;box-shadow:3px 3px 0 rgba(124,42,53,.15)}
+.asp .side.b{transform:rotateY(180deg);background:#fff7e8;border-color:var(--violet);justify-content:flex-start;gap:4px;overflow:auto}
+.asp .side .c{font-family:var(--kai);font-size:44px;font-weight:700;line-height:1}
+.asp .side .ru{font-size:13px;font-weight:800;color:var(--ink-soft)}
+.asp .side .lab{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--violet)}
+.asp .rline{font-size:13px;line-height:1.3}
+.asp .rline b{font-family:var(--kai);font-size:20px;color:var(--accent2)}
+.stickies{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-top:20px}
+.note{position:relative;background:var(--sheet);border:1.6px solid var(--ink);padding:16px 16px 14px;box-shadow:4px 4px 0 rgba(124,42,53,.12)}
+.note .pin{position:absolute;top:-22px;left:14px;background:var(--stone);border:1px solid rgba(54,43,31,.18);padding:8px 12px;font-family:var(--gar);font-weight:700;font-size:17px;transform:rotate(-3deg);box-shadow:2px 4px 8px rgba(54,43,31,.18)}
+.note:nth-child(even) .pin{transform:rotate(2.5deg)}
+.note .pin::before{content:"";position:absolute;top:-8px;left:50%;width:46px;height:14px;margin-left:-23px;background:rgba(201,147,140,.5);transform:rotate(-4deg)}
+.note .f{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:rgba(102,49,215,.08);border:1px dashed rgba(102,49,215,.5);padding:5px 8px;margin:14px 0 10px;color:var(--ink)}
+.note p{font-size:14px;margin-top:6px}
+.gex{font-family:var(--kai);font-size:20px;font-weight:700;border-left:3px solid var(--accent);padding:4px 10px;background:rgba(180,68,28,.06);margin-top:8px;line-height:1.55}
+.gex .py,.gex .tr{display:block;font-family:var(--sans);font-size:12.8px;font-weight:600;line-height:1.35}
+.gex.bad{border-left-color:var(--ink-soft);background:rgba(54,43,31,.05)}
+.gex.bad .zh-x{color:var(--accent);text-decoration:line-through}
+.gtag{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:800;background:var(--paper);border:1.2px solid var(--ink);padding:0 8px;margin-bottom:2px;font-style:normal;color:var(--ink)}
+.cmp2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media (max-width:760px){.cmp2{grid-template-columns:1fr}}
+.cmp2>div{border:1.6px solid var(--ink);background:var(--sheet);padding:14px}
+.cmp2 h4{font-family:var(--gar);font-size:19px;margin-bottom:4px}
+.cmp2 h4 .zh{font-size:22px;color:var(--accent2)}
+table.tbl{border-collapse:collapse;width:100%;font-size:14px;background:var(--sheet);margin-top:8px}
+.tbl th,.tbl td{border:1.3px solid var(--ink);padding:7px 10px;text-align:left;vertical-align:top}
+.tbl th{background:rgba(197,138,26,.16);font-weight:800}
+.tbl td .zh{font-size:19px;font-weight:700}
+.tblw{overflow-x:auto}
+
+/* --- каталог морфем --- */
+.mnav{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 10px}
+.mnav a{text-decoration:none;color:var(--ink);background:var(--stone);width:64px;height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--kai);font-size:28px;font-weight:700;box-shadow:2px 4px 8px rgba(54,43,31,.16);transition:.2s;line-height:1}
+.mnav a small{font-family:var(--sans);font-size:10px;font-style:italic;color:var(--accent);font-weight:800;margin-top:4px}
+.mnav a:nth-child(3n){transform:rotate(-3deg)}.mnav a:nth-child(3n+1){transform:rotate(2deg)}
+.mnav a:hover{transform:translateY(-4px) rotate(0);background:var(--sheet)}
+.mnav a.w2{width:86px;font-size:24px}
+.mgroup{margin-top:34px}
+.mgroup>h3{font-family:var(--gar);font-size:24px;font-weight:700;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.mgroup>h3 .zh{font-family:var(--kai);color:var(--accent2);font-size:26px}
+.mgroup>h3 .gl{font-family:var(--sans);font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--violet);text-transform:uppercase;border:1.3px solid var(--violet);padding:1px 8px;border-radius:99px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}
+@media (max-width:560px){.mgrid{grid-template-columns:1fr}}
+.mor{border:1.6px solid var(--ink);background:var(--sheet);padding:16px 16px 14px;position:relative;scroll-margin-top:80px;box-shadow:4px 4px 0 rgba(124,42,53,.1)}
+.mor:target{box-shadow:0 0 0 3px var(--violet)}
+.mor .mh{display:flex;align-items:center;gap:14px;border-bottom:1.4px solid var(--ink);padding-bottom:10px;margin-bottom:8px}
+.mor .seal{width:66px;height:66px;flex:none;border:2px solid var(--accent);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--kai);font-weight:900;font-size:38px;background:rgba(180,68,28,.06);border-radius:8px;transform:rotate(-3deg);line-height:1}
+.mor .seal.w2{font-size:26px;width:76px}
+.mor .mt{font-family:var(--gar);font-size:20px;font-weight:700;line-height:1.2}
+.mor .mt .py{font-family:var(--sans);font-size:15px;display:block}
+.mor .desc{font-size:14.5px;margin:6px 0}
+.mor .verbs{font-size:13px;margin:6px 0 2px}
+.mor .verbs b{font-family:var(--kai);font-size:17px;color:var(--accent2)}
+.mor .verbs span{font-weight:800;color:var(--ink-soft);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;margin-right:6px}
+.mor .note2{margin-top:10px;font-size:13.5px;border-top:1px dashed var(--line);padding-top:8px}
+.mor .note2::before{content:"✦ ";color:var(--violet)}
+.mor .trap{margin-top:10px;font-size:13.5px;border:1.3px solid var(--accent);background:var(--bad-bg);padding:7px 10px}
+.mor .trap::before{content:"Ловушка: ";font-weight:800;color:var(--accent)}
+
+/* --- задания --- */
+.qitem{border:1.5px solid var(--ink);background:var(--sheet);padding:12px 14px;margin-bottom:10px}
+.qitem.ok{border-color:var(--ok);background:var(--ok-bg)}.qitem.bad{border-color:var(--accent);background:var(--bad-bg)}
+.qitem .s{font-family:var(--kai);font-size:22px;font-weight:700;line-height:1.6}
+.qitem .s .gap{display:inline-block;min-width:54px;border-bottom:2.5px solid var(--accent);text-align:center;color:var(--violet);padding:0 4px}
+.qitem .py,.qitem .tr{display:block;font-size:13px}
+.qitem .n{display:inline-block;width:24px;height:24px;border:1.4px solid var(--ink);border-radius:50%;text-align:center;font-size:12px;line-height:21px;margin-right:6px;background:var(--paper);font-family:var(--sans);font-weight:800;vertical-align:middle}
+.opts{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.opts button{font-family:var(--kai);font-size:21px;font-weight:700;border:1.5px solid var(--ink);background:var(--paper);min-width:52px;padding:3px 12px;cursor:pointer;color:var(--ink);transition:.12s}
+.opts button:hover{transform:translateY(-2px)}
+.opts button.right{background:var(--ok-bg);border-color:var(--ok)}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--accent);text-decoration:line-through}
+.opts button[disabled]{cursor:default;transform:none}
+.why{font-size:13.5px;margin-top:8px;color:var(--accent2);font-weight:600;display:none}
+.qitem.ok .why,.qitem.bad .why,.qitem.done .why{display:block}
+.tfb{font-family:var(--sans)!important;font-size:14px!important;font-weight:800!important}
+.trw{display:grid;grid-template-columns:1fr;gap:6px}
+.trw .ru{font-weight:800;font-size:15px}
+.trw .hint{font-size:12.5px;color:var(--ink-soft)}
+.trw .hint .zh{font-size:15px;font-weight:700;color:var(--ink)}
+.trw input,.trw textarea{width:100%;font-family:var(--kai);font-size:20px}
+.trw textarea{font-family:var(--sans);font-size:15px;min-height:46px;resize:vertical}
+.model{display:none;font-size:13.5px;border-top:1px dashed var(--line);padding-top:6px;margin-top:4px}
+.model .zh{font-size:19px;font-weight:700}
+.qitem.ok .model,.qitem.bad .model,.qitem.show .model{display:block}
+/* сборка глагола */
+.bld{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+@media (max-width:640px){.bld{grid-template-columns:1fr}}
+.bld .sit{font-size:15px;font-weight:700}
+.bld .sit i{font-family:var(--gar);font-size:17px;font-weight:500}
+.slots{display:flex;gap:6px;align-items:center}
+.slot{font-family:var(--kai);font-size:24px;font-weight:700;border:1.8px dashed var(--accent);background:var(--paper);min-width:58px;height:50px;padding:0 10px;cursor:pointer;color:var(--accent);border-radius:4px}
+.slot.set{border-style:solid;background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.slot:not(.set){font-family:var(--sans);font-size:13px;font-weight:800}
+.slot.v.set{background:var(--accent2);border-color:var(--accent2)}
+.plus{font-weight:800;color:var(--ink-soft)}
+#pop{position:absolute;z-index:80;background:var(--sheet);border:1.8px solid var(--ink);box-shadow:5px 5px 0 rgba(102,49,215,.25);padding:8px;display:none;max-width:330px;flex-wrap:wrap;gap:5px}
+#pop.on{display:flex}
+#pop button{font-family:var(--kai);font-size:20px;font-weight:700;border:1.4px solid var(--ink);background:var(--paper);padding:2px 10px;cursor:pointer;color:var(--ink)}
+#pop button:hover{background:var(--ink);color:var(--sheet)}
+#pop .ph{width:100%;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+/* ошибки */
+.tok{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.tok button{font-family:var(--kai);font-size:22px;font-weight:700;border:1.4px solid transparent;background:transparent;padding:1px 5px;cursor:pointer;color:var(--ink);border-radius:4px}
+.tok button:hover{border-color:var(--ink);background:var(--paper)}
+.tok button.miss{border-color:var(--accent);background:var(--bad-bg)}
+.tok button.hit{border-color:var(--ok);background:var(--ok-bg);color:var(--accent2);text-decoration:line-through}
+.tok .pt{font-family:var(--kai);font-size:22px;font-weight:700}
+/* мемори */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:640px;margin:0 auto}
+@media (max-width:560px){.mem{grid-template-columns:repeat(3,1fr)}}
+.mc{perspective:800px;height:104px;cursor:pointer}
+.mc .mi{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.mc.up .mi,.mc.got .mi{transform:rotateY(180deg)}
+.mc .fa{position:absolute;inset:0;backface-visibility:hidden;border:1.6px solid var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px}
+.mc .fa.f{background:var(--accent2);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 6px,transparent 6px 12px);color:var(--sheet);font-family:var(--kai);font-size:30px}
+.mc .fa.b{background:var(--sheet);transform:rotateY(180deg)}
+.mc .fa.b .c{font-family:var(--kai);font-size:28px;font-weight:700;line-height:1.1}
+.mc .fa.b .r{font-size:13px;font-weight:800;line-height:1.25}
+.mc.got .fa.b{background:var(--ok-bg);border-color:var(--ok)}
+/* чтение */
+.reader{background:var(--parch);border:1.8px solid var(--ink);padding:26px 26px 18px;position:relative;box-shadow:inset 0 0 60px rgba(150,110,60,.18)}
+.reader h3{font-family:var(--kai);font-size:34px;text-align:center}
+.reader .sub{text-align:center;display:block;font-family:var(--gar);font-style:italic;font-size:18px}
+.reader .para{margin-top:16px;text-indent:0}
+.reader .sn{display:inline;font-family:var(--kai);font-size:23px;font-weight:600;line-height:2.05}
+.reader .sn .py,.reader .sn .tr{display:block;font-family:var(--sans);font-size:13.5px;line-height:1.35;margin:-4px 0 8px}
+.reader .sn .tr{font-family:var(--gar);font-size:16px;font-style:italic;margin-top:-6px}
+.reader.lines .sn{display:block}
+.reader.hl em.rc{background:linear-gradient(transparent 58%,rgba(102,49,215,.22) 58%);color:var(--accent2)}
+.reader:not(.hl) em.rc{color:inherit;font-weight:inherit}
+.reader .rdeco{position:absolute;right:-26px;top:-36px;width:92px;transform:rotate(14deg);pointer-events:none}
+.rtools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+/* порядок */
+.ord{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.ord{grid-template-columns:1fr}}
+.ocol{border:1.5px dashed var(--line);background:rgba(251,244,230,.5);padding:10px;min-height:120px;display:flex;flex-direction:column;gap:7px}
+.ocard{border:1.5px solid var(--ink);background:var(--sheet);padding:7px 10px;cursor:pointer;font-family:var(--kai);font-size:19px;font-weight:700;transition:.12s;display:flex;gap:8px;align-items:flex-start}
+.ocard:hover{transform:translateX(3px)}
+.ocard .k{font-family:var(--sans);font-size:12px;font-weight:800;border:1.3px solid var(--ink);border-radius:50%;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;margin-top:3px;background:var(--paper)}
+.ocard .py,.ocard .tr{display:block;font-family:var(--sans);font-size:12.5px;font-weight:600}
+.ocard.ok{background:var(--ok-bg);border-color:var(--ok)}.ocard.bad{background:var(--bad-bg);border-color:var(--accent)}
+/* чат */
+.chat{max-width:620px;margin:0 auto;background:#efe4cf;border:1.8px solid var(--ink);padding:14px;display:flex;flex-direction:column;gap:10px;background-image:radial-gradient(rgba(54,43,31,.06) 1px,transparent 1px);background-size:14px 14px}
+.chat .top{text-align:center;font-weight:800;font-size:13px;border-bottom:1.4px solid var(--ink);padding-bottom:8px;margin:-2px -2px 4px}
+.chat .top .zh{font-size:17px}
+.bub{max-width:88%;border:1.5px solid var(--ink);background:var(--sheet);padding:8px 12px;position:relative;align-self:flex-start;border-radius:2px 12px 12px 12px}
+.bub.me{align-self:flex-end;background:#e6efd2;border-radius:12px 2px 12px 12px}
+.bub .who{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase}
+.bub .zl{font-family:var(--kai);font-size:20px;font-weight:700;line-height:1.75}
+.bub .py,.bub .tr{display:block;font-size:12.5px}
+.gp{font-family:var(--kai);font-size:19px;font-weight:700;border:1.6px dashed var(--accent);background:var(--paper);min-width:52px;padding:0 8px;cursor:pointer;color:var(--accent);border-radius:3px;margin:0 2px}
+.gp.set{border-style:solid;background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.gp.ok{background:var(--ok-bg);color:var(--ok);border-color:var(--ok)}
+.gp.bad{background:var(--bad-bg);color:var(--accent);border-color:var(--accent)}
+.rfb{font-size:13px;color:var(--accent2);font-weight:600;margin-top:4px;display:none}
+.bub.chk .rfb{display:block}
+.wq{margin-bottom:14px}
+.wq .q{font-family:var(--kai);font-size:21px;font-weight:700}
+.wq .q small{font-family:var(--sans);font-size:11px;font-weight:800;color:var(--violet);border:1.2px solid var(--violet);padding:0 7px;border-radius:99px;margin-left:6px;vertical-align:middle}
+.wq .py,.wq .tr{display:block;font-size:13px}
+.wq textarea{width:100%;margin-top:6px;min-height:58px;font-family:var(--kai);font-size:19px;resize:vertical}
+
+footer{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:24px 24px 46px 92px;color:var(--ink-soft);font-size:13px;border-top:1.6px solid var(--ink)}
+footer .cp{font-weight:800;color:var(--accent2);font-size:14px;margin-top:6px}
+@media (max-width:860px){header,main,footer{padding-left:24px}.binder{display:none}.mgrid{grid-template-columns:1fr}}
+@media print{#bar,#sky,nav,.wm,.glow,#bird,.hdeco,.grid-bg,body::before,.ornament{display:none!important}body{background:#fff}.panel{box-shadow:none}section.task{break-inside:auto}.reveal{opacity:1;transform:none}.asp .tile .tin{transform:none!important}.asp .side.b{position:relative;transform:none;margin-top:6px}}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div><div class="glow"></div><div class="wm">完</div><div id="sky" aria-hidden="true"></div>
+<div id="tip"><div class="c"></div><div class="p"></div><div class="r"></div></div>
+<div id="pop"></div>
+
+<div id="bar"><div class="bar-in">
+  <span class="ttl">结果补语 · 语法 + 阅读</span>
+  <button class="tg on" id="gPy">拼音 везде</button>
+  <button class="tg on" id="gTr">перевод везде</button>
+  <div class="pg"><div class="track"><i id="pgBar"></i></div><span id="pgTxt">0%</span></div>
+  <button class="tg" id="gPrint">печать</button>
+  <button class="tg" id="gReset">сбросить</button>
+</div></div>
+
+<header>
+  <svg id="bird" viewBox="0 0 140 100" aria-hidden="true">
+    <defs><pattern id="news" width="34" height="9" patternUnits="userSpaceOnUse"><rect width="34" height="9" fill="#ece1cb"/><text x="0" y="7" font-size="6.4" fill="#5b4a36" font-family="serif">完见到着会懂走开</text></pattern></defs>
+    <g stroke="#3d3022" stroke-width="1.3" fill="url(#news)">
+      <path class="wing" d="M60 56 C64 38 80 16 112 4 C104 22 98 36 86 52 C80 58 70 60 60 56Z"/>
+      <path d="M8 58 C18 52 34 50 46 54 C58 50 76 52 88 58 C104 58 118 62 134 72 C118 74 102 74 88 70 C80 80 64 86 48 82 C38 86 28 88 16 86 C24 82 30 76 34 70 C24 66 14 64 8 58Z"/>
+      <path class="wing" d="M56 58 C52 44 50 32 58 18 C64 30 70 42 72 56Z" opacity=".85"/>
+    </g>
+    <circle cx="20" cy="60" r="1.6" fill="#3d3022"/><path d="M8 58 L1 60 L8 61Z" fill="#3d3022"/>
+  </svg>
+  <div class="hdeco h-ribbon" aria-hidden="true"><svg viewBox="0 0 90 170"><path d="M45 20 C20 0 2 18 22 32 C34 40 44 30 45 20 C46 30 58 40 70 32 C90 18 70 0 45 20Z M45 22 C40 60 70 70 52 100 C38 124 66 140 50 168 M45 22 C52 52 22 74 34 104 C44 126 18 140 30 160" fill="none" stroke="#bfae8c" stroke-width="7" stroke-linecap="round"/><path d="M45 22 C40 60 70 70 52 100 C38 124 66 140 50 168 M45 22 C52 52 22 74 34 104 C44 126 18 140 30 160" fill="none" stroke="#f3e9d3" stroke-width="1.6" stroke-dasharray="3 4"/><circle cx="45" cy="21" r="6" fill="#bfae8c"/></svg></div>
+  <div class="hdeco h-rose" aria-hidden="true"><div class="strip"><svg viewBox="0 0 100 250">
+    <defs><pattern id="hatch" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="3" height="3" fill="#d8d0c2"/><line x1="0" y1="0" x2="0" y2="3" stroke="#8d8273" stroke-width=".7"/></pattern>
+    <radialGradient id="rg" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#6e6558"/><stop offset=".6" stop-color="#a69c8d"/><stop offset="1" stop-color="#cfc6b7"/></radialGradient></defs>
+    <path d="M50 92 C47 130 56 170 49 248" stroke="#5f574b" stroke-width="2.6" fill="none"/>
+    <path d="M52 140 C70 128 86 134 92 148 C76 152 62 150 52 140Z" fill="url(#hatch)" stroke="#5f574b" stroke-width="1"/>
+    <path d="M50 178 C32 166 16 170 10 186 C26 190 40 188 50 178Z" fill="url(#hatch)" stroke="#5f574b" stroke-width="1"/>
+    <path d="M51 120 l5 -4 M48 160 l-5 -3 M51 205 l5 -4" stroke="#5f574b" stroke-width="1.2"/>
+    <path d="M50 96 C30 96 16 82 18 62 C20 42 34 28 50 28 C66 28 82 42 82 62 C84 82 70 96 50 96Z" fill="url(#rg)" stroke="#4f473d" stroke-width="1.2"/>
+    <path d="M50 52 c8 -2 10 8 2 10 c-10 3 -15 -9 -5 -14 c12 -6 22 8 13 18 c-12 12 -30 2 -27 -14 c2 -16 24 -24 36 -12 M24 66 C30 82 44 90 58 88 M76 70 C72 84 60 92 46 92 M30 44 C36 36 46 34 54 36" fill="none" stroke="#3f382f" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M36 96 C40 104 46 104 50 98 C54 104 62 104 66 96" fill="#9a907f" stroke="#4f473d" stroke-width="1"/>
+  </svg></div></div>
+  <div class="hdeco h-seal" aria-hidden="true"><svg viewBox="0 0 80 80"><rect x="4" y="4" width="72" height="72" rx="6" fill="none" stroke="#b4441c" stroke-width="3"/><rect x="10" y="10" width="60" height="60" rx="3" fill="rgba(180,68,28,.08)" stroke="#b4441c" stroke-width="1"/><text x="40" y="37" text-anchor="middle" font-size="24" font-weight="900" fill="#b4441c" font-family="KaiTi,STKaiti,serif">结果</text><text x="40" y="63" text-anchor="middle" font-size="24" font-weight="900" fill="#b4441c" font-family="KaiTi,STKaiti,serif">补语</text></svg></div>
+  <div class="hdeco h-spk" aria-hidden="true"><svg viewBox="0 0 60 60"><path d="M22 6 C23 18 26 21 38 22 C26 23 23 26 22 38 C21 26 18 23 6 22 C18 21 21 18 22 6Z" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/><path d="M46 34 C46.6 41 48 42.4 55 43 C48 43.6 46.6 45 46 52 C45.4 45 44 43.6 37 43 C44 42.4 45.4 41 46 34Z" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/></svg></div>
+
+  <div class="stamp">ГРАММАТИКА · ПРАКТИКА · ЧТЕНИЕ</div><br>
+  <h1>结果补语<svg class="doodle" viewBox="0 0 400 26" preserveAspectRatio="none"><path d="M4 16 C60 6 120 22 190 12 C250 4 320 20 396 10 M30 22 C110 14 230 24 360 18"/></svg><span class="latin">результативные морфемы — от процесса к результату</span></h1>
+  <p class="lead">Почему <span class="zh">我看了</span> — это ещё не «я увидел», а <span class="zh">我找了</span> — не «я нашёл»? Разбираем все 19 морфем: <i>что каждая значит, с какими глаголами живёт и где на ней спотыкаются русскоговорящие</i>. Дальше — практика, текст про очень невезучую субботу и задания к нему. Новые слова отмечены <span class="nw" data-c="点" data-p="diǎn" data-r="точка — наведите курсор на слово с точками">точками</span>: наведите курсор или нажмите — появятся пиньинь и перевод.</p>
+  <nav>
+    <a href="#dict"><b>词</b>Словарь</a>
+    <a href="#theory"><b>一</b>Что это такое</a>
+    <a href="#catalog"><b>二</b>19 морфем</a>
+    <a href="#p1"><b>三</b>Выбор морфемы</a>
+    <a href="#p2"><b>四</b>Переводы</a>
+    <a href="#p3"><b>五</b>Собери глагол</a>
+    <a href="#p4"><b>六</b>Найди ошибку</a>
+    <a href="#p5"><b>七</b>Мемори</a>
+    <a href="#read"><b>八</b>Текст</a>
+    <a href="#r1"><b>九</b>对 или 错</a>
+    <a href="#r2"><b>十</b>Порядок событий</a>
+    <a href="#r3"><b>十一</b>Переписка</a>
+    <a href="#write"><b>十二</b>Пишем сами</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ СЛОВАРЬ ============ -->
+<section class="task" id="dict">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">词</div><h2>Словарь урока</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Морфемы, их главные сочетания и новые слова из примеров и текста. Звёздочкой ★ отмечайте трудные слова. Свои слова можно добавить импортом (CSV, TSV или JSON), а список выгрузить в Anki.</p>
+  <div class="panel"><span class="tape"></span>
+    <div class="dict-tools">
+      <input class="inp" id="dSearch" placeholder="Поиск: иероглиф, пиньинь без тонов (kanwan), перевод…">
+      <button class="btn small" id="dStar">★ только избранные</button>
+    </div>
+    <div class="dtabs" id="dTabs"></div>
+    <div class="dict-tools">
+      <span class="bank-head">Экспорт:</span>
+      <button class="btn small" id="dCsv">CSV</button><button class="btn small" id="dAnki">Anki TSV</button><button class="btn small" id="dJson">JSON</button>
+      <span class="bank-head" style="margin-left:10px">Импорт:</span>
+      <label class="btn small accent" style="cursor:pointer">загрузить файл<input type="file" id="dImp" accept=".csv,.tsv,.txt,.json" hidden></label>
+      <button class="btn small" id="dImpClear">убрать добавленные</button>
+      <span class="msg" id="dMsg"></span>
+    </div>
+    <div class="dlist" id="dList"></div>
+    <div class="foot">Формат импорта: строка <b>иероглиф, пиньинь, перевод</b> (через запятую, точку с запятой или табуляцию) либо JSON-массив вида [{"c":"…","p":"…","r":"…"}]. Переводы — по БКРС.</div>
+
+    <div class="subhead">Карточки для повторения</div>
+    <div class="fc-set">
+      <select id="fcDir"><option value="zh">汉字 → русский</option><option value="ru">русский → 汉字</option><option value="py">пиньинь → 汉字</option></select>
+      <select id="fcSrc"><option value="all">все слова</option><option value="m">только морфемы</option><option value="c">только сочетания</option><option value="w">новые слова</option><option value="star">только ★</option><option value="new">ещё не выученные</option></select>
+      <select id="fcN"><option value="10">10 карточек</option><option value="20">20 карточек</option><option value="999">все</option></select>
+      <label><input type="checkbox" id="fcShuf" checked> перемешать</label>
+      <label><input type="checkbox" id="fcHint"> пиньинь на лицевой стороне</label>
+      <button class="btn small primary" id="fcStart">▶ начать</button>
+    </div>
+    <div class="fc-stage">
+      <div class="fcard" id="fcCard"><div class="in"><div class="face front" id="fcFront"><div class="mid">Нажмите «начать»</div><div class="hint">карточка переворачивается по клику</div></div><div class="face back" id="fcBack"></div></div></div>
+      <div class="row-btns" style="margin:0"><button class="btn accent" id="fcAgain" disabled>↺ ещё повторю</button><button class="btn primary" id="fcKnow" disabled>✓ знаю</button></div>
+      <div class="fc-info" id="fcInfo"></div>
+    </div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<div class="ornament" aria-hidden="true"><svg viewBox="0 0 220 30"><path d="M10 15 H88 M132 15 H210" stroke="#362b1f" stroke-width="1"/><path d="M110 3 C111 11 114 14 122 15 C114 16 111 19 110 27 C109 19 106 16 98 15 C106 14 109 11 110 3Z" fill="#6631d7"/><circle cx="92" cy="15" r="2.4" fill="#b4441c"/><circle cx="128" cy="15" r="2.4" fill="#b4441c"/><path d="M40 15 C46 6 56 6 60 15 C56 24 46 24 40 15Z M160 15 C166 6 176 6 180 15 C176 24 166 24 160 15Z" fill="none" stroke="#362b1f" stroke-width="1"/></svg></div>
+
+<!-- ============ ТЕОРИЯ ============ -->
+<section class="task" id="theory">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">一</div><h2>Что такое результативная морфема</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Сначала — общая идея, формулы и ловушки. Каталог всех морфем с примерами — в следующем разделе.</p>
+  <div class="panel reveal"><span class="tape"></span>
+    <div class="rule"><b>Результативные морфемы</b> (<span class="zh">结果补语</span> <span class="py">jiéguǒ bǔyǔ</span>) — это глагол или прилагательное, которые добавляются к основному глаголу и означают полученный результат. Разница между <span class="zh">我看书</span> «я читаю книгу» и <span class="zh">我看<em class="rc">完</em>书了</span> «я дочитал книгу» — только в частичке <span class="zh">完</span>, «приклеенной» к глаголу.</div>
+
+    <div class="glue">
+      <div class="gstage" aria-hidden="true">
+        <div class="gch v">看<small>kàn</small></div><span class="gplus">+</span><div class="gch r">完<small>wán</small></div><span class="gle">了</span>
+      </div>
+      <div class="gcap">
+        <div class="gex">我<em class="rc">看</em>书。<span class="py">Wǒ kàn shū.</span><span class="tr">Я читаю книгу. — процесс: читаю, а дочитаю ли — неизвестно.</span></div>
+        <div class="gex">我<em class="rc">看完</em>书了。<span class="py">Wǒ kànwán shū le.</span><span class="tr">Я дочитал книгу. — результат: последняя страница перевёрнута.</span></div>
+      </div>
+    </div>
+
+    <div class="subhead">Почему это трудно русскоговорящим</div>
+    <p style="font-size:15px">В русском результат «встроен» в сам глагол: <b>читать → прочитать, дочитать</b>; <b>слушать → услышать</b>; <b>искать → найти</b>. Это совершенный вид, и мы выражаем его приставками. В китайском приставок нет: голый глагол <span class="zh">看</span>, <span class="zh">听</span>, <span class="zh">找</span> сообщает только о <b>процессе</b>. Даже с <span class="zh">了</span> он значит «смотрел, слушал, искал», но не гарантирует, что результат есть. Результат добавляет вторая морфема. Нажмите на карточку — увидите, во что превращается глагол.</p>
+    <div class="asp" id="asp"></div>
+
+    <div class="subhead">Пять правил</div>
+    <div class="stickies">
+      <div class="note"><span class="pin">Можно использовать 了</span>
+        <div class="f">S + V + R + 了 + O &nbsp;|&nbsp; O + S + V + R + 了</div>
+        <p>了 стоит <b>после морфемы</b> — сразу за ней или в конце фразы. Между глаголом и морфемой ничего не вставляется: они срослись в одно слово.</p>
+        <div class="gex">我<em class="rc">看完</em>了这本书。<span class="py">Wǒ kànwánle zhè běn shū.</span><span class="tr">Я дочитал эту книгу.</span></div>
+        <div class="gex">老师说的话我都<em class="rc">听懂</em>了。<span class="py">Lǎoshī shuō de huà wǒ dōu tīngdǒng le.</span><span class="tr">Я понял всё, что сказал учитель.</span></div>
+        <div class="gex bad"><span class="zh-x">我看了完这本书。</span><span class="tr">✗ 了 нельзя вставлять между 看 и 完.</span></div>
+      </div>
+      <div class="note"><span class="pin">Отрицание через 没有</span>
+        <div class="f">S + 没(有) + V + R + O</div>
+        <p>«Не дочитал, не нашёл, не понял» — это прошлое, поэтому <b>没(有)</b>. После 没 частица 了 <b>не ставится</b>: результата нет — значит, и отмечать нечего.</p>
+        <div class="gex">我没有<em class="rc">写完</em>作业。<span class="py">Wǒ méiyǒu xiěwán zuòyè.</span><span class="tr">Я не дописал домашнее задание.</span></div>
+        <div class="gex">他没<em class="rc">听懂</em>。<span class="py">Tā méi tīngdǒng.</span><span class="tr">Он не понял.</span></div>
+        <div class="gex bad"><span class="zh-x">我没看完了。</span> <span class="zh-x">昨天我不找到手机。</span><span class="tr">✗ после 没 нет 了; о прошлом — не 不.</span></div>
+      </div>
+      <div class="note"><span class="pin">不 — предположение о будущем</span>
+        <div class="f">不 + V + R …，就 …</div>
+        <p>不 перед глаголом с морфемой — это условие или предупреждение о том, что <b>ещё не случилось</b>: «если не…», «пока не…».</p>
+        <div class="gex">不<em class="rc">写完</em>作业，就不能玩。<span class="py">Bù xiěwán zuòyè, jiù bù néng wán.</span><span class="tr">Не допишешь домашку — гулять нельзя.</span></div>
+        <div class="gex">不<em class="rc">学好</em>汉语，就<em class="rc">找不到</em><span class="nw" data-c="理想">理想</span>的工作了！<span class="py">Bù xuéhǎo Hànyǔ, jiù zhǎo bu dào lǐxiǎng de gōngzuò le!</span><span class="tr">Если не выучить как следует китайский, не найти работу мечты!</span></div>
+      </div>
+      <div class="note"><span class="pin">Вопрос</span>
+        <div class="f">V + R + 了吗？ &nbsp;|&nbsp; V + R + 了没有？</div>
+        <p>Спрашиваем о результате двумя способами. Отвечаем глаголом с морфемой: «да» — <span class="zh">吃完了</span>, «нет» — <span class="zh">没吃完</span> или <span class="zh"><span class="nw" data-c="还">还</span>没吃完</span> «ещё не доел».</p>
+        <div class="gex">你<em class="rc">吃完</em>了吗？——<em class="rc">吃完</em>了。<span class="py">Nǐ chīwán le ma? — Chīwán le.</span><span class="tr">Ты доел? — Доел.</span></div>
+        <div class="gex">你<em class="rc">找到</em>了没有？——<span class="nw" data-c="还">还</span>没<em class="rc">找到</em>。<span class="py">Nǐ zhǎodàole méiyǒu? — Hái méi zhǎodào.</span><span class="tr">Ну что, нашёл? — Ещё не нашёл.</span></div>
+      </div>
+      <div class="note"><span class="pin">Где дополнение</span>
+        <div class="f">V + R (+了) + O &nbsp;→&nbsp; O + S + (都) + V + R + 了</div>
+        <p>Дополнение идёт после всей группы «глагол + морфема». Если предмет уже известен или фраза длинная, его выносят в начало как тему.</p>
+        <div class="gex">我<em class="rc">找到</em>了手机。= 手机我<em class="rc">找到</em>了。<span class="py">Wǒ zhǎodàole shǒujī. = Shǒujī wǒ zhǎodào le.</span><span class="tr">Я нашёл телефон. / Телефон я нашёл.</span></div>
+        <div class="gex">这些汉字我都<em class="rc">写好</em>了。<span class="py">Zhèxiē Hànzì wǒ dōu xiěhǎo le.</span><span class="tr">Все эти иероглифы я уже дописал.</span></div>
+        <div class="gex bad"><span class="zh-x">我找手机到了。</span><span class="tr">✗ дополнение не разрывает 找到.</span></div>
+      </div>
+      <div class="note"><span class="pin">Заглянем вперёд: 听不懂</span>
+        <div class="f">V + 不 + R = не могу, не выходит &nbsp;|&nbsp; V + <span class="nw" data-c="得">得</span> + R = могу</div>
+        <p><span class="zh">我听不懂</span>, <span class="zh">找不到</span> — это <b>форма возможности</b>: 不 встаёт <b>между</b> глаголом и морфемой. Подробно будет позже, но узнавать её нужно уже сейчас.</p>
+        <div class="gex">我<em class="rc">听不懂</em>他说的话。<span class="py">Wǒ tīng bu dǒng tā shuō de huà.</span><span class="tr">Я не понимаю, что он говорит (не могу понять).</span></div>
+        <div class="gex">这个字太小了，我<em class="rc">看不清楚</em>。<span class="py">Zhè ge zì tài xiǎo le, wǒ kàn bu qīngchu.</span><span class="tr">Этот иероглиф слишком мелкий, мне не разглядеть.</span></div>
+        <p class="tr" style="display:block;font-size:13px">没听懂 — в этот раз не понял; 听不懂 — не способен понять (слишком быстро, сложно, незнакомый диалект).</p>
+      </div>
+    </div>
+
+    <div class="subhead">好 после глагола ≠ «хорошо»</div>
+    <p style="font-size:15px">Сравните две похожие фразы. Внешне обе «про хорошо», но смысл разный:</p>
+    <div class="cmp2">
+      <div><h4><span class="zh">做好</span> — результат: готово</h4>
+        <div class="gex">这些饭我<em class="rc">做好</em>了。<span class="py">Zhèxiē fàn wǒ zuòhǎo le.</span><span class="tr">Еда готова — я её приготовил (можно садиться есть).</span></div>
+        <p style="font-size:13.5px;margin-top:6px">Конкретное действие доведено до готового состояния. Ставится 了.</p></div>
+      <div><h4><span class="zh">写<span class="nw" data-c="得">得</span>好</span> — оценка: как обычно получается</h4>
+        <div class="gex">我写汉字写<span class="nw" data-c="得">得</span>好。<span class="py">Wǒ xiě Hànzì xiě de hǎo.</span><span class="tr">Я хорошо пишу иероглифы (у меня это хорошо получается).</span></div>
+        <p style="font-size:13.5px;margin-top:6px">Это дополнение степени с 得 — оценка того, <b>как</b> человек что-то делает. Это не результат конкретного действия.</p></div>
+    </div>
+
+    <div class="subhead">Три ступени: процесс → восприятие → понимание</div>
+    <div class="tblw"><table class="tbl">
+      <tr><th>процесс</th><th>дошло до органов чувств</th><th>понял смысл</th><th>довёл до конца</th></tr>
+      <tr><td><span class="zh">看</span> смотреть, читать</td><td><span class="zh">看见 / 看到</span> увидеть</td><td><span class="zh">看懂</span> понять (прочитав, посмотрев)</td><td><span class="zh">看完</span> досмотреть, дочитать</td></tr>
+      <tr><td><span class="zh">听</span> слушать</td><td><span class="zh">听见 / 听到</span> услышать</td><td><span class="zh">听懂</span> понять на слух</td><td><span class="zh">听完</span> дослушать</td></tr>
+    </table></div>
+    <div class="gex" style="margin-top:12px">我<em class="rc">听见</em>了，可是没<em class="rc">听懂</em>。<span class="py">Wǒ tīngjiàn le, kěshì méi tīngdǒng.</span><span class="tr">Я услышал, но не понял.</span></div>
+
+    <div class="warn"><span class="h">Типичные ошибки русскоговорящих</span><ol>
+      <li><b>«Я нашёл / понял / увидел» голым глаголом.</b> <span class="zh">我找了</span> = «я искал», <span class="zh">我听了</span> = «я слушал», <span class="zh">我看了</span> = «я смотрел». Результат — только с морфемой: <span class="zh">找到 · 听懂 · 看见</span>.</li>
+      <li><b>不 вместо 没 в прошлом.</b> <s class="zh">我昨天不看完</s> → <span class="zh">我昨天没看完</span>.</li>
+      <li><b>了 после 没.</b> <s class="zh">我没找到了</s> → <span class="zh">我没找到</span>.</li>
+      <li><b>Разрыв пары.</b> <s class="zh">看了完</s>, <s class="zh">找手机到</s> → <span class="zh">看完了</span>, <span class="zh">找到手机</span>.</li>
+      <li><b>«Выучил» = 学了?</b> Нет: <span class="zh">学了</span> — «поучил». Навык освоен — <span class="zh">学会了</span>; слова запомнил — <span class="zh"><span class="nw" data-c="记住">记住</span>了</span>.</li>
+    </ol></div>
+    <div class="culture"><span class="ch-t">文化 · 完 — «конец фильма» и «всё пропало»</span>В старых китайских фильмах последним кадром на экране появлялся один большой знак <b class="zh">完</b> — как английское The End. А в разговоре <b class="zh">完了！</b> <span class="py">wán le</span> значит «всё, конец, пропало!» — так говорят, когда проспали, забыли ключи или разбили телефон. Это восклицание встретится в нашем тексте.</div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<!-- ============ КАТАЛОГ ============ -->
+<section class="task" id="catalog">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">二</div><h2>Все 19 морфем: значение и примеры</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Морфемы разложены по семи группам по смыслу. Нажмите на «стикер», чтобы перейти к карточке. В каждой карточке есть значение, с какими глаголами морфема сочетается, живые примеры и ловушка.</p>
+  <div class="panel"><span class="tape"></span>
+    <div class="mnav" id="mNav"></div>
+    <div id="mWrap"></div>
+    <div class="culture"><span class="ch-t">文化 · 四是四，十是十</span>Знаменитая скороговорка <span class="zh">绕口令</span> <span class="py">ràokǒulìng</span>: <b class="zh">四是四，十是十，十四是十四，四十是四十。</b> <span class="py">Sì shì sì, shí shì shí, shísì shì shísì, sìshí shì sìshí.</span> Звуки s и sh путают не только иностранцы: на юге Китая многие произносят их одинаково, поэтому <span class="zh">把“四”听成“十”</span> — совершенно жизненная ситуация. Она и станет завязкой нашего текста.</div>
+    <div class="culture"><span class="ch-t">文化 · 考上 и 高考</span><b class="zh">考上大学</b> — «поступить в университет», буквально «сдать экзамен и подняться». Главный экзамен страны — <b class="zh">高考</b> <span class="py">gāokǎo</span>: каждый год 7–8 июня его сдают больше 13 миллионов выпускников. В эти дни у школ дежурит полиция, а водителям запрещают сигналить поблизости.</div>
+    <div class="culture"><span class="ch-t">文化 · 笑死 и 双十一</span>В переписке китайцы постоянно пишут <b class="zh">笑死</b> или <b class="zh">笑死我了</b> — «я умираю со смеху», а сокращение <b>xswl</b> — это то же <span class="zh">笑死我了</span>. А через три дня, 11 ноября, — <b class="zh">双十一</b>: после этой распродажи многие жалуются <span class="zh">钱都花光了！</span> и шутят про <b class="zh">剁手</b> <span class="py">duòshǒu</span> — «отрубить себе руки», чтобы больше ничего не покупать.</div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<div class="ornament" aria-hidden="true"><svg viewBox="0 0 220 30"><path d="M10 15 H88 M132 15 H210" stroke="#362b1f" stroke-width="1"/><path d="M110 3 C111 11 114 14 122 15 C114 16 111 19 110 27 C109 19 106 16 98 15 C106 14 109 11 110 3Z" fill="#6631d7"/><circle cx="92" cy="15" r="2.4" fill="#b4441c"/><circle cx="128" cy="15" r="2.4" fill="#b4441c"/></svg></div>
+
+<!-- ============ П1 ============ -->
+<section class="task" id="p1">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">三</div><h2>Какая морфема нужна?</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Двадцать ситуаций. Прочитайте всю фразу целиком — подсказка почти всегда во второй половине. После ответа появится объяснение. Для честной проверки отключите перевод.</p>
+  <div class="panel">
+    <div id="p1Wrap"></div>
+    <div class="score"><span id="p1Count"></span><div class="bar"><i id="p1Bar"></i></div><button class="btn small" id="p1Reset">сбросить</button></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<!-- ============ П2 ============ -->
+<section class="task" id="p2">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">四</div><h2>Переводы</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub"><b>4.1</b> — с русского на китайский, иероглифами (знаки препинания не важны, принимаются разные верные варианты). <b>4.2</b> — с китайского на русский: напишите свой перевод и сравните с образцом.</p>
+  <div class="panel">
+    <div class="subhead" style="margin-top:0">4.1 · На китайский</div>
+    <div id="p2Wrap"></div>
+    <div class="row-btns"><button class="btn accent" id="p2Check">Проверить все</button><button class="btn small" id="p2Clr">очистить</button><span class="msg" id="p2Res"></span></div>
+    <div class="subhead">4.2 · На русский — проверьте себя по образцу</div>
+    <div id="p2bWrap"></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<!-- ============ П3 ============ -->
+<section class="task" id="p3">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">五</div><h2>Соберите глагол под ситуацию</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Прочитайте ситуацию и соберите подходящее китайское сочетание: в левой ячейке выберите глагол, в правой — морфему. Иногда верных вариантов два, проверка их примет.</p>
+  <div class="panel">
+    <div id="p3Wrap"></div>
+    <div class="row-btns"><button class="btn accent" id="p3Check">Проверить</button><button class="btn small" id="p3Clr">очистить</button><span class="msg" id="p3Res"></span></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<!-- ============ П4 ============ -->
+<section class="task" id="p4">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">六</div><h2>Найдите ошибку — нажмите на неё</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">В каждой фразе одно лишнее или неверное слово. Нажмите на него — появится исправленная фраза и правило. Перевод показывает, что хотели сказать.</p>
+  <div class="panel">
+    <div id="p4Wrap"></div>
+    <div class="score"><span id="p4Count"></span><div class="bar"><i id="p4Bar"></i></div><span id="p4Err" style="color:var(--accent)"></span><button class="btn small" id="p4Reset">сбросить</button></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<!-- ============ П5 ============ -->
+<section class="task" id="p5">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">七</div><h2>Мемори: глагол с морфемой и его перевод</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Переворачивайте по две карточки и ищите пары «китайское сочетание — русский перевод». В каждой партии восемь случайных пар из урока. Чем меньше ходов, тем лучше.</p>
+  <div class="panel">
+    <div class="mem" id="memGrid"></div>
+    <div class="score" style="justify-content:center"><span id="memInfo"></span><button class="btn small primary" id="memNew">новая партия ↺</button></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<div class="ornament" aria-hidden="true"><svg viewBox="0 0 220 30"><path d="M10 15 H88 M132 15 H210" stroke="#362b1f" stroke-width="1"/><path d="M110 3 C111 11 114 14 122 15 C114 16 111 19 110 27 C109 19 106 16 98 15 C106 14 109 11 110 3Z" fill="#6631d7"/><circle cx="92" cy="15" r="2.4" fill="#b4441c"/><circle cx="128" cy="15" r="2.4" fill="#b4441c"/></svg></div>
+
+<!-- ============ ЧТЕНИЕ ============ -->
+<section class="task" id="read">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">八</div><h2>阅读 · <span class="zh">倒霉的星期六</span></h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Анна и Ван Пэн идут на пекинскую оперу, но у Анны всё идёт не так. Почти все слова в тексте вам уже знакомы. Новые слова отмечены точками снизу: наведите курсор или нажмите на них. Кнопка «подсветить» выделит все результативные морфемы.</p>
+  <div class="panel">
+    <div class="rtools">
+      <button class="btn small" id="rHl">✦ подсветить морфемы</button>
+      <button class="btn small" id="rLines">по предложениям</button>
+      <span class="msg" id="rInfo" style="color:var(--ink-soft)"></span>
+    </div>
+    <div class="reader" id="reader">
+      <svg class="rdeco" viewBox="0 0 60 60" aria-hidden="true"><path d="M22 6 C23 18 26 21 38 22 C26 23 23 26 22 38 C21 26 18 23 6 22 C18 21 21 18 22 6Z" fill="#f6ead4" stroke="#1a1a1a" stroke-width="2"/><path d="M46 34 C46.6 41 48 42.4 55 43 C48 43.6 46.6 45 46 52 C45.4 45 44 43.6 37 43 C44 42.4 45.4 41 46 34Z" fill="#f6ead4" stroke="#1a1a1a" stroke-width="2"/></svg>
+      <div id="rText"></div>
+    </div>
+    <div class="foot" id="rFoot"></div>
+    <div class="culture"><span class="ch-t">文化 · 京剧 и маски-лянпу</span><b class="zh">京剧</b> <span class="py">jīngjù</span> — пекинская опера. Она сложилась после 1790 года, когда на 80-летие императора Цяньлуна в столицу приехали четыре труппы из провинции Аньхой. В 2010 году ЮНЕСКО внесла её в список нематериального наследия человечества. Грим <b class="zh">脸谱</b> <span class="py">liǎnpǔ</span> работает как код: <b>красное</b> лицо — верность и храбрость (полководец Гуань Юй), <b>белое</b> — хитрость и коварство (Цао Цао), <b>чёрное</b> — прямота и неподкупность (судья Бао). Зритель понимает, кто перед ним, ещё до первой арии — как Анна в нашем тексте.</div>
+    <div class="culture"><span class="ch-t">文化 · Откуда «倒霉»</span>По одной популярной версии, слово пришло из эпохи Мин. Перед государственными экзаменами семьи кандидатов ставили у ворот шест-флагшток. Кто сдал, оставлял его, а кто провалился, снимал: «шест упал» — <span class="zh">倒楣</span> <span class="py">dǎo méi</span>. Потом второй знак заменили созвучным <span class="zh">霉</span> «плесень», и получилось нынешнее <b class="zh">倒霉</b> — «не везёт».</div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<section class="task" id="r1">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">九</div><h2>По тексту: 对 или 错?</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Верно или неверно? Будьте внимательны к морфемам: <span class="zh">没听见</span> и <span class="zh">没听清楚</span> — совсем разные вещи.</p>
+  <div class="panel">
+    <div id="r1Wrap"></div>
+    <div class="score"><span id="r1Count"></span><div class="bar"><i id="r1Bar"></i></div><button class="btn small" id="r1Reset">сбросить</button></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<section class="task" id="r2">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">十</div><h2>По тексту: восстановите порядок событий</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">События перепутались. Нажимайте на карточки слева в том порядке, в каком всё произошло. Нажатие на карточку справа возвращает её обратно.</p>
+  <div class="panel">
+    <div class="ord"><div><div class="bank-head" style="margin-bottom:6px">События</div><div class="ocol" id="r2Pool"></div></div><div><div class="bank-head" style="margin-bottom:6px">Ваш порядок</div><div class="ocol" id="r2Seq"></div></div></div>
+    <div class="row-btns"><button class="btn accent" id="r2Check">Проверить</button><button class="btn small" id="r2Clr">заново</button><span class="msg" id="r2Res"></span></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<section class="task" id="r3">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">十一</div><h2>Ван Пэн рассказывает другу: вставьте по смыслу</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Вечером Ван Пэн пересказал всю историю другу в WeChat. Его слова не совпадают с текстом дословно — выбирайте по смыслу. Нажмите на пропуск, выберите вариант, затем «проверить». Перевод по умолчанию скрыт, чтобы не подсказывать.</p>
+  <div class="panel">
+    <div class="chat" id="r3Wrap"></div>
+    <div class="row-btns" style="justify-content:center"><button class="btn accent" id="r3Check">Проверить</button><button class="btn small" id="r3Clr">очистить</button><span class="msg" id="r3Res"></span></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+<section class="task" id="write">
+  <div class="binder"></div>
+  <div class="sec-head"><div class="sec-num">十二</div><h2>Пишем сами</h2><div class="tgs"><button class="mini tg-py">拼音</button><button class="mini tg-tr">перевод</button></div></div>
+  <p class="sec-sub">Без автопроверки. Ответьте полными предложениями иероглифами — в рамке указано, какую морфему обязательно использовать. Ответы сохраняются в браузере. Затем пришлите скриншот преподавателю.</p>
+  <div class="panel">
+    <div id="wWrap"></div>
+    <div class="shot">Пришлите скриншот выполненного упражнения</div>
+  </div>
+</section>
+
+</main>
+
+<footer>结果补语 · 完 · 见 · 到 · 着 · 会 · 懂 · 走 · 开 · 动 · 上 · 成 · 好 · 对 · 错 · 清楚 · 干净 · 光 · 掉 · 死
+  <div class="cp">© 2026 Максим и Валерия. Все материалы созданы Валерией и Максимом. Все права защищены.</div>
+</footer>
+
+<script>
+/* ========== утилиты ========== */
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>[].slice.call((r||document).querySelectorAll(s));
+const PFX="jgbz1_";
+const S={get(k,d){try{const v=localStorage.getItem(PFX+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},
+         set(k,v){try{localStorage.setItem(PFX+k,JSON.stringify(v));}catch(e){}}};
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const TONES={'ā':'a','á':'a','ǎ':'a','à':'a','ē':'e','é':'e','ě':'e','è':'e','ī':'i','í':'i','ǐ':'i','ì':'i','ō':'o','ó':'o','ǒ':'o','ò':'o','ū':'u','ú':'u','ǔ':'u','ù':'u','ǖ':'v','ǘ':'v','ǚ':'v','ǜ':'v','ü':'v'};
+function normPy(s){return String(s).toLowerCase().split("").map(c=>TONES[c]||c).join("").replace(/[^a-z0-9v]/g,"");}
+function normZh(s){return String(s).replace(/[\s，。！？、,\.!\?;；:：“”"'‘’—\-…（）()]/g,"");}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function download(name,data,type){const b=new Blob([data],{type:type||"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);}
+
+/* ========== новые слова ========== */
+const NEWW={
+"京剧":["jīngjù","пекинская опера"],"票":["piào","билет"],"记":["jì","запоминать; записывать"],"闹钟":["nàozhōng","будильник"],
+"响":["xiǎng","звенеть, звучать"],"又":["yòu","снова, опять"],"只有":["zhǐyǒu","только, всего лишь"],"最后":["zuìhòu","в конце концов, наконец"],
+"床":["chuáng","кровать"],"穿":["chuān","надевать, носить (одежду)"],"地图":["dìtú","карта, схема"],"才":["cái","только, лишь (позже, чем ожидалось)"],
+"累":["lèi","усталый; устать"],"还":["hái","ещё, всё ещё"],"笑":["xiào","смеяться, улыбаться"],"演员":["yǎnyuán","актёр, актриса"],
+"脸谱":["liǎnpǔ","лянпу, грим-маска в пекинской опере"],"脸":["liǎn","лицо"],"白色":["báisè","белый цвет"],"坏人":["huàirén","плохой человек, злодей"],
+"日记":["rìjì","дневник"],"词":["cí","слово"],"倒霉":["dǎoméi","не везёт; невезучий"],"一定":["yídìng","обязательно, непременно"],
+"不是":["bú shì … ma","разве не…? (риторический вопрос 不是…吗)"],"闻":["wén","нюхать, чуять"],"味道":["wèidao","запах; вкус"],"声音":["shēngyīn","звук, голос"],
+"火":["huǒ","огонь"],"点":["diǎn","зажигать (огонь)"],"每天":["měi tiān","каждый день"],"拿":["ná","брать, взять"],"搬":["bān","переносить, передвигать"],
+"窗户":["chuānghu","окно"],"合":["hé","закрывать (книгу), смыкать"],"考":["kǎo","сдавать экзамен"],"房子":["fángzi","дом, квартира"],"租":["zū","снимать, арендовать"],
+"别提多":["bié tí duō","не передать, как…"],"把":["bǎ","служебное слово: выносит дополнение перед глаголом"],"课文":["kèwén","текст урока"],
+"遍":["biàn","раз (от начала до конца)"],"次":["cì","раз"],"理想":["lǐxiǎng","идеальный, желанный; мечта"],"得":["de","частица дополнения степени: 写得好 «пишет хорошо»"],
+"猜":["cāi","угадывать"],"忘":["wàng","забывать"],"擦":["cā","вытирать, протирать"],"花":["huā","тратить (деньги, время)"],"咱们":["zánmen","мы (с вами)"],
+"旧":["jiù","старый (о вещах)"],"蚊子":["wénzi","комар"],"爬":["pá","лезть, карабкаться"],"山":["shān","гора"],"爬山":["páshān","подниматься в горы"],
+"山顶":["shāndǐng","вершина горы"],"但":["dàn","но"],"怎么了":["zěnme le","что случилось?"],"然后":["ránhòu","потом, а затем"],"发":["fā","отправлять (сообщение)"],
+"微信":["Wēixìn","WeChat (мессенджер)"],"下次":["xià cì","в следующий раз"],"不见了":["bú jiàn le","пропасть, исчезнуть"],"为什么":["wèishénme","почему"],
+"记住":["jìzhù","запомнить"],"部":["bù","счётное слово для фильмов"]
+};
+function mk(s){
+  return String(s).replace(/\{([^}]+)\}/g,(m,w)=>`<span class="nw" tabindex="0" data-c="${w}">${w}</span>`)
+    .replace(/\[([^\]]+)\]/g,'<em class="rc">$1</em>');
+}
+
+/* ========== морфемы ========== */
+const GROUPS=[
+ {g:"A",t:"Довести до конца, воспринять, достичь",zh:"完 · 见 · 到 · 着"},
+ {g:"B",t:"Знание и понимание",zh:"会 · 懂"},
+ {g:"C",t:"Перемещение",zh:"走 · 开 · 动"},
+ {g:"D",t:"Соединение и превращение",zh:"上 · 成"},
+ {g:"E",t:"Это не прилагательные в привычном переводе!",zh:"好 · 对 · 错"},
+ {g:"F",t:"Состояние после действия",zh:"清楚 · 干净 · 光"},
+ {g:"G",t:"Исчезновение и предел",zh:"掉 · 死"}
+];
+const MORPH=[
+{g:"A",id:"wan",c:"完",p:"wán",m:"закончить, довести до конца",
+ desc:"Действие доведено до конца, процесс исчерпан: книга дочитана, тарелка пуста, домашка дописана. По-русски это приставки до-, про-, вы-: дочитать, доесть, выпить.",
+ verbs:"吃 · 喝 · 看 · 写 · 做 · 说 · 卖",
+ ex:[["我[看完]电影了。","Wǒ kànwán diànyǐng le.","Я досмотрел фильм."],
+     ["你[吃完]早饭了吗？","Nǐ chīwán zǎofàn le ma?","Ты уже доел завтрак?"],
+     ["我没有[写完]作业。","Wǒ méiyǒu xiěwán zuòyè.","Я не дописал домашнее задание."],
+     ["牛奶[喝完]了，我去超市买。","Niúnǎi hēwán le, wǒ qù chāoshì mǎi.","Молоко закончилось (его допили) — схожу в супермаркет."],
+     ["[写完]作业，我们去公园玩吧！","Xiěwán zuòyè, wǒmen qù gōngyuán wán ba!","Допишем домашку — и пойдём гулять в парк!"]],
+ note:"Не путайте 完 wán «закончить» и 玩 wán «гулять, играть»: звучат одинаково, а в последнем примере стоят в одной фразе."},
+{g:"A",id:"jian",c:"见",p:"jiàn",m:"увидеть, услышать, учуять",
+ desc:"Информация дошла до органов чувств. Морфема работает только с глаголами восприятия 看, 听, 闻. Часто результат «случайный»: вы не старались — оно само попало в поле зрения.",
+ verbs:"看见 увидеть · 听见 услышать · 闻见 учуять",
+ ex:[["我[看见]王朋了，他在书店里。","Wǒ kànjiàn Wáng Péng le, tā zài shūdiàn lǐ.","Я увидел Ван Пэна, он в книжном магазине."],
+     ["你[听见]了吗？外面下雨了。","Nǐ tīngjiàn le ma? Wàimian xià yǔ le.","Слышишь? На улице пошёл дождь."],
+     ["我[{闻}见]饺子的{味道}了！","Wǒ wénjiàn jiǎozi de wèidao le!","Я чую запах пельменей!"],
+     ["我[听见]了{声音}，可是没[看见]人。","Wǒ tīngjiànle shēngyīn, kěshì méi kànjiàn rén.","Я услышал звук, но никого не увидел."],
+     ["我看了，可是没[看见]。","Wǒ kàn le, kěshì méi kànjiàn.","Я смотрел, но не увидел."]],
+ trap:"看 — «смотреть» (процесс). «Я увидел» — только 我看见了. Последний пример показывает разницу: процесс был, результата нет."},
+{g:"A",id:"dao",c:"到",p:"dào",m:"достичь: места, момента, цели",
+ desc:"Самая многозначная морфема. Общая идея — «дотянуться»: до точки в пространстве, до момента во времени или до цели, к которой шли.",
+ verbs:"走到 · 回到 · 睡到 · 学到 · 找到 · 买到 · 看到 · 听到",
+ ex:[["我们[走到]公园了。","Wǒmen zǒudào gōngyuán le.","Мы дошли до парка.","1 · движение — «дойти, доехать до»"],
+     ["他晚上十点[回到]家。","Tā wǎnshang shí diǎn huídào jiā.","Он вернулся домой в десять вечера.","1 · движение"],
+     ["星期六我[睡到]十点。","Xīngqīliù wǒ shuìdào shí diǎn.","По субботам я сплю до десяти.","2 · длительное действие — «до момента»"],
+     ["妈妈{每天}[工作到]晚上七点。","Māma měi tiān gōngzuò dào wǎnshang qī diǎn.","Мама каждый день работает до семи вечера.","2 · до момента"],
+     ["我[找到]我的手机了！","Wǒ zhǎodào wǒ de shǒujī le!","Я нашёл свой телефон!","3 · результат усилий"],
+     ["那本书我没[买到]。","Nà běn shū wǒ méi mǎidào.","Ту книгу я так и не смог купить (не достал).","3 · результат усилий"],
+     ["我在公园[看到]了一只猫。","Wǒ zài gōngyuán kàndàole yì zhī māo.","Я увидел в парке кошку.","4 · просто результат, как 见"]],
+ trap:"找 = «искать», 找到 = «найти». Фраза 我找了 значит «я искал» — нашли или нет, неизвестно."},
+{g:"A",id:"zhao",c:"着",p:"zháo",m:"достичь результата (уснуть, зажечь)",
+ desc:"Похожа на 到 в значении результата, но есть два сочетания, где используется только она: 睡着 «заснуть» и 点着 «зажечь, разжечь». Читается zháo, а не zhe!",
+ verbs:"睡着 уснуть · 点着 зажечь",
+ ex:[["孩子[睡着]了。","Háizi shuìzháo le.","Ребёнок уснул."],
+     ["我睡了，可是没[睡着]。","Wǒ shuì le, kěshì méi shuìzháo.","Я лёг спать, но не уснул."],
+     ["看电视的时候，爷爷[睡着]了。","Kàn diànshì de shíhou, yéye shuìzháo le.","Пока смотрел телевизор, дедушка уснул."],
+     ["昨天晚上我[睡不着]觉。","Zuótiān wǎnshang wǒ shuì bu zháo jiào.","Вчера вечером я никак не мог уснуть."],
+     ["{火}[{点}着]了。","Huǒ diǎnzháo le.","Огонь разгорелся (разжечь удалось)."]],
+ note:"На севере Китая в разговоре 着 часто заменяет 到: 找着了 = 找到了 «нашёл», 买着了 = 买到了 «купил, достал»."},
+{g:"B",id:"hui",c:"会",p:"huì",m:"научиться, освоить",
+ desc:"Модальный глагол 会 — «уметь». Морфема 会 — «научиться», то есть стать человеком, который умеет. Почти всегда в паре 学会 и только про навыки: водить, плавать, готовить, петь.",
+ verbs:"学会",
+ ex:[["我[学会]开车了。","Wǒ xuéhuì kāichē le.","Я научился водить машину."],
+     ["她[学会]唱{京剧}了。","Tā xuéhuì chàng jīngjù le.","Она научилась петь пекинскую оперу."],
+     ["我学了半年游泳，可是没[学会]。","Wǒ xuéle bàn nián yóuyǒng, kěshì méi xuéhuì.","Я полгода учился плавать, но так и не научился."],
+     ["你[学会]做饺子了吗？——[学会]了！","Nǐ xuéhuì zuò jiǎozi le ma? — Xuéhuì le!","Ты научилась лепить пельмени? — Научилась!"]],
+ trap:"学 — «учиться» (процесс), 学会 — «научиться» (результат). 我学了三年汉语 — «я учил китайский три года»; 我学会说汉语了 — «я научился говорить по-китайски»."},
+{g:"B",id:"dong",c:"懂",p:"dǒng",m:"понять",
+ desc:"Ставится после 看, 听, 读: прочитал и понял, услышал и понял. Сравните три ступени: 听 «слушать» → 听见 «услышать» → 听懂 «понять на слух».",
+ verbs:"听懂 · 看懂 · 读懂",
+ ex:[["老师说的话我都[听懂]了。","Lǎoshī shuō de huà wǒ dōu tīngdǒng le.","Я понял всё, что сказал учитель."],
+     ["我[看懂]{课文}了。","Wǒ kàndǒng kèwén le.","Я понял текст урока."],
+     ["这本中文书，我[看懂]了一半。","Zhè běn Zhōngwén shū, wǒ kàndǒngle yíbàn.","Эту китайскую книгу я понял наполовину."],
+     ["你[听懂]了吗？——没[听懂]，请再说一{遍}。","Nǐ tīngdǒng le ma? — Méi tīngdǒng, qǐng zài shuō yí biàn.","Вы поняли? — Не понял, повторите, пожалуйста."],
+     ["我[听不懂]。","Wǒ tīng bu dǒng.","Я не понимаю (на слух)."]],
+ trap:"«Я понял» в ответ на объяснение — 我懂了 или 我听懂了, а не 我听了 («я послушал»)."},
+{g:"C",id:"zou",c:"走",p:"zǒu",m:"унести, увезти, уйти прочь",
+ desc:"Предмет или человек удаляется от места действия. Сравните: 我弟弟走了 «брат ушёл» и 我弟弟拿走了我的电脑 «брат унёс мой компьютер» — ушёл не только брат, но и компьютер.",
+ verbs:"拿走 · 买走 · 开走",
+ ex:[["我弟弟[{拿}走]了我的电脑。","Wǒ dìdi názǒule wǒ de diànnǎo.","Младший брат унёс мой компьютер."],
+     ["谁[{拿}走]了我的书包？","Shéi názǒule wǒ de shūbāo?","Кто унёс мой рюкзак?"],
+     ["那件毛衣有人[买走]了。","Nà jiàn máoyī yǒu rén mǎizǒu le.","Тот свитер уже кто-то купил (и унёс)."],
+     ["车[开走]了！","Chē kāizǒu le!","Машина уехала!"]]},
+{g:"C",id:"kai",c:"开",p:"kāi",m:"открыть, раздвинуть, отделить",
+ desc:"Открыть, раздвинуть, отделить одно от другого. Самое частое сочетание — 打开 «открыть», а для техники «включить».",
+ verbs:"打开 · 走开",
+ ex:[["请[打开]书。","Qǐng dǎkāi shū.","Откройте, пожалуйста, книги."],
+     ["他[打开]门，[看见]了一只狗。","Tā dǎkāi mén, kànjiànle yì zhī gǒu.","Он открыл дверь и увидел собаку."],
+     ["太热了，[打开]{窗户}吧！","Tài rè le, dǎkāi chuānghu ba!","Слишком жарко, откройте окно!"],
+     ["你[打开]电脑，我们一起看。","Nǐ dǎkāi diànnǎo, wǒmen yìqǐ kàn.","Включи компьютер, посмотрим вместе."],
+     ["[走开]！","Zǒukāi!","Отойди! Уйди с дороги!"]],
+ note:"Обратное действие — 关上 «закрыть» (дверь, окно) или 关掉 «выключить» (технику). Смотрите карточки 上 и 掉."},
+{g:"C",id:"dong4",c:"动",p:"dòng",m:"сдвинуть с места",
+ desc:"Сдвинуть, привести в движение. Чаще всего встречается в форме возможности: 搬不动 «не сдвинуть», 走不动 «больше нет сил идти».",
+ verbs:"搬动 · 走不动 · 搬不动",
+ ex:[["我们[{搬}动]了桌子和椅子。","Wǒmen bāndòngle zhuōzi hé yǐzi.","Мы передвинули стол и стулья."],
+     ["这张桌子太大了，我一个人[{搬}不动]。","Zhè zhāng zhuōzi tài dà le, wǒ yí ge rén bān bu dòng.","Этот стол слишком большой, я один его не сдвину."],
+     ["我太{累}了，[走不动]了。","Wǒ tài lèi le, zǒu bu dòng le.","Я так устал, что больше не могу идти."]],
+ trap:"动 dòng «двигать» и 懂 dǒng «понимать» различаются только тоном: 搬动 — «сдвинуть», 听懂 — «понять»."},
+{g:"D",id:"shang",c:"上",p:"shàng",m:"соединить, закрыть, надеть; подняться",
+ desc:"Чаще всего описывает результат соединения двух частей или предметов: закрыть книгу или дверь, надеть одежду, вписать имя. А ещё — подняться наверх и достичь цели.",
+ verbs:"合上 · 关上 · 写上 · 穿上 · 考上 · 爬上",
+ ex:[["请[{合}上]书。","Qǐng héshàng shū.","Закройте, пожалуйста, книги."],
+     ["在这儿要[写上]你的名字。","Zài zhèr yào xiěshàng nǐ de míngzi.","Здесь нужно вписать своё имя."],
+     ["外面冷，[{穿}上]大衣吧！","Wàimian lěng, chuānshàng dàyī ba!","На улице холодно, надень пальто!"],
+     ["他[关上]门，就睡觉了。","Tā guānshàng mén, jiù shuìjiào le.","Он закрыл дверь и лёг спать."],
+     ["她[{考}上]了北京大学！","Tā kǎoshàngle Běijīng Dàxué!","Она поступила в Пекинский университет!"]],
+ note:"考上 — «сдать экзамен и поступить»: цель достигнута. 考了 — только «сдавала экзамен»."},
+{g:"D",id:"cheng",c:"成",p:"chéng",m:"удалось; превратить A в B",
+ desc:"Два значения. 1) Задуманное успешно удалось. 2) Одно превратилось в другое, или A приняли за B: написал, услышал, увидел «не то, а вот это».",
+ verbs:"做成 · 租成 · 写成 · 听成 · 看成",
+ ex:[["那个{房子}[{租}成]了，我{别提多}高兴了！","Nà ge fángzi zūchéng le, wǒ bié tí duō gāoxìng le!","Ту квартиру удалось снять — не передать, как я рад!","1 · удалось"],
+     ["这个蛋糕我[做成]了！","Zhè ge dàngāo wǒ zuòchéng le!","Торт у меня получился!","1 · удалось"],
+     ["他{把}“买”字[写成]了“卖”。","Tā bǎ “mǎi” zì xiěchéngle “mài”.","Он написал «купить» как «продать».","2 · A → B"],
+     ["他{把}“四”[听成]了“十”。","Tā bǎ “sì” tīngchéngle “shí”.","Он услышал «четыре» как «десять».","2 · A → B"]],
+ note:"把 здесь — служебное слово: оно выносит дополнение перед глаголом («взял „买“ и написал как „卖“»). Конструкцию 把 разберём позже; пока запомните модель 把 A 写成 / 听成 / 看成 B."},
+{g:"E",id:"hao",c:"好",p:"hǎo",m:"готово, сделано как надо",
+ desc:"Не «хороший»! Морфема 好 значит «готово, доведено до нужного состояния»: 做好饭 — еда готова, можно есть; 写好 — написано и можно сдавать.",
+ verbs:"做好 · 写好 · 买好 · 学好 · 坐好",
+ ex:[["这些汉字我都[写好]了。","Zhèxiē Hànzì wǒ dōu xiěhǎo le.","Все эти иероглифы я уже дописал."],
+     ["这些饭我[做好]了。","Zhèxiē fàn wǒ zuòhǎo le.","Еда готова — я всё приготовил."],
+     ["饭[做好]了，大家来吃吧！","Fàn zuòhǎo le, dàjiā lái chī ba!","Еда готова, все к столу!"],
+     ["{票}我已经[买好]了。","Piào wǒ yǐjīng mǎihǎo le.","Билеты я уже купил (вопрос решён)."],
+     ["不[学好]汉语，就[找不到]{理想}的工作了！","Bù xuéhǎo Hànyǔ, jiù zhǎo bu dào lǐxiǎng de gōngzuò le!","Если не выучить как следует китайский, не найти работу мечты!"]],
+ trap:"写好了 — «дописал, готово»; «я хорошо пишу» — 我写得好 (см. раздел 一)."},
+{g:"E",id:"dui",c:"对",p:"duì",m:"правильно, верно",
+ desc:"«Правильно, верно»: сказать, сделать, написать, угадать без ошибки.",
+ verbs:"说对 · 做对 · 写对 · 猜对",
+ ex:[["今天很热，你[说对]了。","Jīntiān hěn rè, nǐ shuōduì le.","Сегодня жарко — ты был прав."],
+     ["这个字你[写对]了。","Zhè ge zì nǐ xiěduì le.","Этот иероглиф ты написал правильно."],
+     ["十个练习，我[做对]了九个。","Shí ge liànxí, wǒ zuòduìle jiǔ ge.","Из десяти упражнений я правильно сделал девять."],
+     ["你[{猜}对]了！","Nǐ cāiduì le!","Ты угадал!"]]},
+{g:"E",id:"cuo",c:"错",p:"cuò",m:"ошибочно, не то",
+ desc:"Результат получился, но не тот. По-русски часто приставка о-/об-: ослышаться, обознаться, ошибиться номером.",
+ verbs:"听错 · 看错 · 写错 · 坐错 · 打错 · 走错",
+ ex:[["我[听错]了你的名字。","Wǒ tīngcuòle nǐ de míngzi.","Я неправильно расслышал ваше имя."],
+     ["对不起，我[打错]电话了。","Duìbuqǐ, wǒ dǎcuò diànhuà le.","Извините, я ошибся номером."],
+     ["我们[坐错]车了！","Wǒmen zuòcuò chē le!","Мы сели не на тот автобус!"],
+     ["你[写错]了：这不是“买”，是“卖”。","Nǐ xiěcuò le: zhè bú shì “mǎi”, shì “mài”.","Ты ошибся: это не 买, а 卖."],
+     ["对不起，我[看错]人了。","Duìbuqǐ, wǒ kàncuò rén le.","Простите, я обознался."]],
+ trap:"写错 — «написал не тот знак», а не «написал некрасиво». Некрасиво — 写得不好."},
+{g:"F",id:"qing",c:"清楚",p:"qīngchu",m:"ясно, отчётливо",
+ desc:"«Ясный, чёткий»: увидеть, услышать, сказать, написать, запомнить отчётливо, без путаницы.",
+ verbs:"看清楚 · 听清楚 · 说清楚 · 写清楚 · 记清楚",
+ ex:[["请[写清楚]你的名字。","Qǐng xiě qīngchu nǐ de míngzi.","Напишите, пожалуйста, своё имя разборчиво."],
+     ["我没[听清楚]，请再说一{遍}。","Wǒ méi tīng qīngchu, qǐng zài shuō yí biàn.","Я не расслышал, повторите, пожалуйста."],
+     ["你[看清楚]：这是“大”，不是“太”。","Nǐ kàn qīngchu: zhè shì “dà”, bú shì “tài”.","Посмотри внимательно: это 大, а не 太."],
+     ["请[{记}清楚]：银行星期天不开门。","Qǐng jì qīngchu: yínháng xīngqītiān bù kāi mén.","Запомните точно: по воскресеньям банк не работает."]],
+ note:"Двусложные морфемы пишутся в пиньине отдельно: tīng qīngchu, xǐ gānjìng."},
+{g:"F",id:"gan",c:"干净",p:"gānjìng",m:"дочиста; начисто",
+ desc:"«Чистый»: и буквально — вымыть, вытереть дочиста, и в переносном смысле — начисто забыть.",
+ verbs:"洗干净 · 擦干净 · 忘干净",
+ ex:[["水果[洗干净]了吗？","Shuǐguǒ xǐ gānjìng le ma?","Фрукты как следует помыли?"],
+     ["衣服我[洗干净]了。","Yīfu wǒ xǐ gānjìng le.","Одежду я выстирал дочиста."],
+     ["桌子[{擦}干净]了，可以吃饭了。","Zhuōzi cā gānjìng le, kěyǐ chī fàn le.","Стол протёрли — можно садиться есть."],
+     ["去年学的汉字，我都[{忘}干净]了！","Qùnián xué de Hànzì, wǒ dōu wàng gānjìng le!","Иероглифы, которые учил в прошлом году, я начисто забыл!"]]},
+{g:"F",id:"guang",c:"光",p:"guāng",m:"дочиста, без остатка",
+ desc:"«Дочиста, без остатка»: всё исчезло — съели, выпили, потратили, раскупили.",
+ verbs:"吃光 · 喝光 · 花光 · 卖光",
+ ex:[["钱都[{花}光]了。","Qián dōu huāguāng le.","Деньги все потрачены."],
+     ["蛋糕我们都[吃光]了。","Dàngāo wǒmen dōu chīguāng le.","Торт мы съели подчистую."],
+     ["饺子[卖光]了，明天再来吧！","Jiǎozi màiguāng le, míngtiān zài lái ba!","Пельмени распроданы, приходите завтра!"],
+     ["双十一，我的钱都[{花}光]了！","Shuāng Shíyī, wǒ de qián dōu huāguāng le!","На «Двойную единицу» я спустил все деньги!"]],
+ trap:"吃完 — «доел» (процесс закончился, речь о вашей порции). 吃光 — «съели всё, ничего не осталось» (акцент на пустоте)."},
+{g:"G",id:"diao",c:"掉",p:"diào",m:"прочь, насовсем",
+ desc:"Само по себе 掉 — «ронять, терять». После глагола — что-то отброшено или пропало, чаще всего навсегда: съели, продали, выключили, забыли.",
+ verbs:"吃掉 · 卖掉 · 关掉 · 忘掉",
+ ex:[["昨天买的蔬菜我都[吃掉]了，今天{咱们}再去买。","Zuótiān mǎi de shūcài wǒ dōu chīdiào le, jīntiān zánmen zài qù mǎi.","Овощи, что купили вчера, я все съел — сегодня сходим ещё."],
+     ["{旧}手机我[卖掉]了。","Jiù shǒujī wǒ màidiào le.","Старый телефон я продал."],
+     ["睡觉以前，请[关掉]手机。","Shuìjiào yǐqián, qǐng guāndiào shǒujī.","Перед сном выключите, пожалуйста, телефон."],
+     ["[{忘}掉]他吧！","Wàngdiào tā ba!","Забудь его!"]]},
+{g:"G",id:"si",c:"死",p:"sǐ",m:"до смерти; «умираю, как…»",
+ desc:"«Умереть». Как и в русском, 死 бывает буквальным результатом действия или преувеличением: «до смерти рассмешил», «смертельно устал». В переносном значении стоит и после прилагательных: 累, 饿, 热, 冷.",
+ verbs:"累死了 · 饿死了 · 热死了 · 笑死了 · 打死",
+ ex:[["{爬山}的时候，我[饿死]了，[{累}死]了，{但}[{爬}上]了{山顶}就什么都{忘}了。","Páshān de shíhou, wǒ è sǐ le, lèi sǐ le, dàn páshàngle shāndǐng jiù shénme dōu wàng le.","Пока лез в гору, умирал от голода и усталости, но как только забрался на вершину — всё забыл."],
+     ["今天[热死]了！","Jīntiān rè sǐ le!","Сегодня жара — умереть можно!"],
+     ["[{笑}死]我了！","Xiào sǐ wǒ le!","Я умираю со смеху!"],
+     ["他[打死]了一只{蚊子}。","Tā dǎsǐle yì zhī wénzi.","Он прихлопнул комара."]],
+ trap:"С 死了 нельзя 很: ✗很累死了 → ✓累死了. Это эмоциональная разговорная форма, в официальном письме её нет."}
+];
+
+const COMBOS=[
+["看完","kànwán","досмотреть, дочитать"],["吃完","chīwán","доесть"],["写完","xiěwán","дописать"],["喝完","hēwán","допить"],["完了","wán le","всё, конец! всё пропало! (восклицание)"],
+["看见","kànjiàn","увидеть"],["听见","tīngjiàn","услышать"],["闻见","wénjiàn","учуять"],["走到","zǒudào","дойти до"],["回到","huídào","вернуться (куда-то)"],
+["睡到","shuìdào","спать до (какого-то часа)"],["找到","zhǎodào","найти"],["买到","mǎidào","купить, достать"],["看到","kàndào","увидеть"],["睡着","shuìzháo","уснуть"],
+["点着","diǎnzháo","зажечь, разжечь"],["学会","xuéhuì","научиться, освоить"],["听懂","tīngdǒng","понять на слух"],["看懂","kàndǒng","понять (прочитав, посмотрев)"],
+["拿走","názǒu","унести, забрать"],["买走","mǎizǒu","купить и унести"],["开走","kāizǒu","уехать (о машине)"],["打开","dǎkāi","открыть; включить"],["走开","zǒukāi","отойти, уйти с дороги"],
+["搬动","bāndòng","сдвинуть, передвинуть"],["走不动","zǒu bu dòng","не в силах идти"],["合上","héshàng","закрыть (книгу)"],["写上","xiěshàng","вписать"],["穿上","chuānshàng","надеть"],
+["关上","guānshàng","закрыть (дверь, окно)"],["考上","kǎoshàng","поступить (сдав экзамен)"],["做成","zuòchéng","сделать успешно, получилось"],["写成","xiěchéng","написать как (A вместо B)"],
+["听成","tīngchéng","услышать как (принять A за B)"],["做好","zuòhǎo","сделать, приготовить (готово)"],["写好","xiěhǎo","дописать (готово)"],["买好","mǎihǎo","купить заранее (готово)"],
+["学好","xuéhǎo","выучить как следует"],["说对","shuōduì","сказать правильно, оказаться правым"],["做对","zuòduì","сделать правильно"],["写对","xiěduì","написать правильно"],
+["听错","tīngcuò","ослышаться"],["打错","dǎcuò","ошибиться номером"],["坐错","zuòcuò","сесть не на тот транспорт"],["写错","xiěcuò","написать с ошибкой"],["看错","kàncuò","обознаться; не так прочитать"],
+["听清楚","tīng qīngchu","расслышать"],["写清楚","xiě qīngchu","написать разборчиво"],["看清楚","kàn qīngchu","рассмотреть, разглядеть"],["记清楚","jì qīngchu","запомнить точно"],
+["洗干净","xǐ gānjìng","отмыть, выстирать дочиста"],["忘干净","wàng gānjìng","начисто забыть"],["吃光","chīguāng","съесть подчистую"],["花光","huāguāng","потратить всё"],["卖光","màiguāng","распродать"],
+["吃掉","chīdiào","съесть (без остатка)"],["卖掉","màidiào","продать (избавиться)"],["关掉","guāndiào","выключить"],["忘掉","wàngdiào","забыть, выкинуть из головы"],
+["累死了","lèi sǐ le","устал до смерти"],["饿死了","è sǐ le","умираю от голода"],["笑死了","xiào sǐ le","умереть со смеху"],["打死","dǎsǐ","убить, прихлопнуть"],
+["找不到","zhǎo bu dào","не могу найти"],["听不懂","tīng bu dǒng","не понимаю на слух"]
+];
+const CMAP={};COMBOS.forEach(c=>CMAP[c[0]]=c);
+
+/* ========== словарь ========== */
+const BASE=[].concat(
+  MORPH.map(m=>({c:m.c,p:m.p,r:"морфема: "+m.m,t:"m"})),
+  COMBOS.map(c=>({c:c[0],p:c[1],r:c[2],t:"c"})),
+  Object.keys(NEWW).map(k=>({c:k,p:NEWW[k][0],r:NEWW[k][1],t:"w"}))
+);
+const TABS={all:"все",m:"морфемы",c:"сочетания",w:"новые слова",my:"мои слова"};
+function allWords(){return BASE.concat(S.get("imp",[]).map(w=>({c:w.c,p:w.p,r:w.r,t:"my",imp:1})));}
+
+/* ========== tooltip новых слов ========== */
+(function(){
+  const tip=$("#tip");let cur=null;
+  function show(el){
+    const c=el.dataset.c||el.textContent;const d=NEWW[c]||CMAP[c]||[el.dataset.p||"",el.dataset.r||""];
+    const p=el.dataset.p||d[0]||"",r=el.dataset.r||d[1]||"";
+    $(".c",tip).textContent=c.length>6?"":c;$(".p",tip).textContent=p;$(".r",tip).textContent=r;
+    const b=el.getBoundingClientRect();tip.classList.add("on");
+    const w=tip.offsetWidth,h=tip.offsetHeight;
+    let x=b.left+b.width/2-w/2;x=Math.max(8,Math.min(x,innerWidth-w-8));
+    let y=b.top-h-10;if(y<60)y=b.bottom+10;
+    tip.style.left=x+"px";tip.style.top=y+"px";cur=el;
+  }
+  function hide(){tip.classList.remove("on");cur=null;}
+  document.addEventListener("mouseover",e=>{const n=e.target.closest(".nw");if(n)show(n);});
+  document.addEventListener("mouseout",e=>{const n=e.target.closest(".nw");if(n&&!n.contains(e.relatedTarget))hide();});
+  document.addEventListener("focusin",e=>{const n=e.target.closest(".nw");if(n)show(n);});
+  document.addEventListener("focusout",e=>{if(e.target.closest(".nw"))hide();});
+  document.addEventListener("click",e=>{const n=e.target.closest(".nw");if(n){e.stopPropagation();cur===n?hide():show(n);}else if(cur)hide();},true);
+  addEventListener("scroll",hide,{passive:true});
+})();
+
+/* ========== переключатели ========== */
+const TG=S.get("tg",{});
+function applyTg(){
+  $$("section.task").forEach(s=>{
+    const id=s.id,st=TG[id]||{};
+    const py=st.py!=null?st.py:(s.dataset.py!=="0"),tr=st.tr!=null?st.tr:(s.dataset.tr!=="0");
+    s.classList.toggle("nopy",!py);s.classList.toggle("notr",!tr);
+    const bp=$(".tg-py",s),bt=$(".tg-tr",s);if(bp)bp.classList.toggle("on",py);if(bt)bt.classList.toggle("on",tr);
+  });
+  const allPy=$$("section.task").every(s=>!s.classList.contains("nopy")),allTr=$$("section.task").every(s=>!s.classList.contains("notr"));
+  $("#gPy").classList.toggle("on",allPy);$("#gTr").classList.toggle("on",allTr);
+}
+function initTg(){
+  $$("section.task").forEach(s=>{
+    const bp=$(".tg-py",s),bt=$(".tg-tr",s);
+    if(bp)bp.onclick=()=>{TG[s.id]=Object.assign({},TG[s.id],{py:s.classList.contains("nopy")});S.set("tg",TG);applyTg();};
+    if(bt)bt.onclick=()=>{TG[s.id]=Object.assign({},TG[s.id],{tr:s.classList.contains("notr")});S.set("tg",TG);applyTg();};
+  });
+  $("#gPy").onclick=()=>{const v=!$("#gPy").classList.contains("on");$$("section.task").forEach(s=>{TG[s.id]=Object.assign({},TG[s.id],{py:v});});S.set("tg",TG);applyTg();};
+  $("#gTr").onclick=()=>{const v=!$("#gTr").classList.contains("on");$$("section.task").forEach(s=>{TG[s.id]=Object.assign({},TG[s.id],{tr:v});});S.set("tg",TG);applyTg();};
+  $("#gPrint").onclick=()=>{$$(".reveal").forEach(e=>e.classList.add("in"));window.print();};
+  $("#gReset").onclick=()=>{if(!confirm("Стереть все ответы и настройки этого урока?"))return;try{Object.keys(localStorage).filter(k=>k.indexOf(PFX)===0).forEach(k=>localStorage.removeItem(k));}catch(e){}location.reload();};
+}
+
+/* ========== прогресс ========== */
+const PROG={};
+function prog(id,done,total){PROG[id]=[done,total];let d=0,t=0;Object.keys(PROG).forEach(k=>{d+=PROG[k][0];t+=PROG[k][1];});const p=t?Math.round(d/t*100):0;$("#pgBar").style.width=p+"%";$("#pgTxt").textContent=p+"%";}
+function bar(sel,done,total){const e=$(sel);if(e)e.style.width=(total?done/total*100:0)+"%";}
+
+/* ========== словарь: интерфейс ========== */
+let dTab="all";
+function renderDict(){
+  const q=$("#dSearch").value.trim().toLowerCase(),qp=normPy(q),stars=S.get("star",[]),only=$("#dStar").classList.contains("on");
+  const list=allWords().filter(w=>(dTab==="all"||w.t===dTab)&&(!only||stars.indexOf(w.c)>=0)&&(!q||w.c.indexOf(q)>=0||(qp&&normPy(w.p).indexOf(qp)>=0)||w.r.toLowerCase().indexOf(q)>=0));
+  $("#dList").innerHTML=list.length?list.map(w=>`<div class="dcard${w.imp?" imp":""}"><div><div class="dc">${esc(w.c)}</div><span class="meta py">${esc(w.p)}</span><span class="meta tr">${esc(w.r)}</span></div><button class="star${stars.indexOf(w.c)>=0?" on":""}" data-c="${esc(w.c)}" title="в избранное">★</button></div>`).join(""):`<p class="tr" style="display:block">Ничего не найдено.</p>`;
+  $$("#dList .star").forEach(b=>b.onclick=()=>{const st=S.get("star",[]);const i=st.indexOf(b.dataset.c);i>=0?st.splice(i,1):st.push(b.dataset.c);S.set("star",st);renderDict();});
+}
+function initDict(){
+  $("#dTabs").innerHTML=Object.keys(TABS).map(k=>`<button data-t="${k}" class="${k===dTab?"on":""}">${TABS[k]}</button>`).join("");
+  $$("#dTabs button").forEach(b=>b.onclick=()=>{dTab=b.dataset.t;$$("#dTabs button").forEach(x=>x.classList.toggle("on",x===b));renderDict();});
+  $("#dSearch").oninput=renderDict;
+  $("#dStar").onclick=()=>{$("#dStar").classList.toggle("on");$("#dStar").classList.toggle("primary");renderDict();};
+  $("#dCsv").onclick=()=>download("rezultativnye_morfemy.csv","﻿иероглиф,пиньинь,перевод\n"+allWords().map(w=>[w.c,w.p,w.r].map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(",")).join("\n"),"text/csv;charset=utf-8");
+  $("#dAnki").onclick=()=>download("rezultativnye_morfemy_anki.txt",allWords().map(w=>w.c+"\t"+w.p+"<br>"+w.r).join("\n"));
+  $("#dJson").onclick=()=>download("rezultativnye_morfemy.json",JSON.stringify(allWords().map(w=>({c:w.c,p:w.p,r:w.r})),null,1),"application/json");
+  $("#dImp").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{
+    let arr=[];const txt=String(rd.result).replace(/^﻿/,"");
+    try{if(/^\s*\[/.test(txt))arr=JSON.parse(txt).map(o=>({c:o.c||o.hanzi||"",p:o.p||o.pinyin||"",r:o.r||o.ru||o.translation||""}));
+      else arr=txt.split(/\r?\n/).map(l=>l.split(/\t|;|,/).map(x=>x.replace(/^"|"$/g,"").trim())).filter(a=>a[0]&&/[一-鿿]/.test(a[0])).map(a=>({c:a[0],p:a[1]||"",r:a.slice(2).join(", ")}));}catch(err){arr=[];}
+    arr=arr.filter(w=>w.c);const cur=S.get("imp",[]);const have={};allWords().forEach(w=>have[w.c]=1);let n=0;
+    arr.forEach(w=>{if(!have[w.c]){cur.push(w);have[w.c]=1;n++;}});S.set("imp",cur);
+    $("#dMsg").className="msg ok";$("#dMsg").textContent="Добавлено слов: "+n;renderDict();};rd.readAsText(f);e.target.value="";};
+  $("#dImpClear").onclick=()=>{S.set("imp",[]);$("#dMsg").className="msg";$("#dMsg").textContent="Добавленные слова удалены.";renderDict();};
+  renderDict();initFc();
+}
+let FC={deck:[],i:0};
+function initFc(){
+  const card=$("#fcCard");
+  card.onclick=()=>{if(FC.deck.length)card.classList.toggle("flip");};
+  $("#fcStart").onclick=()=>{
+    const src=$("#fcSrc").value,stars=S.get("star",[]),known=S.get("known",[]);
+    let d=allWords().filter(w=>src==="all"||(src==="star"?stars.indexOf(w.c)>=0:src==="new"?known.indexOf(w.c)<0:w.t===src));
+    if($("#fcShuf").checked)d=shuffle(d);d=d.slice(0,+$("#fcN").value);
+    if(!d.length){$("#fcInfo").textContent="В этой выборке нет слов.";return;}
+    FC={deck:d,i:0,ok:0};showFc();$("#fcAgain").disabled=$("#fcKnow").disabled=false;};
+  $("#fcKnow").onclick=()=>{const w=FC.deck[FC.i];const k=S.get("known",[]);if(k.indexOf(w.c)<0){k.push(w.c);S.set("known",k);}FC.ok++;FC.i++;showFc();};
+  $("#fcAgain").onclick=()=>{FC.deck.push(FC.deck[FC.i]);FC.i++;showFc();};
+}
+function showFc(){
+  const card=$("#fcCard");card.classList.remove("flip");
+  if(FC.i>=FC.deck.length){$("#fcFront").innerHTML=`<div class="big">完成！</div><div class="hint">Колода пройдена. Знаю: ${FC.ok}</div>`;$("#fcBack").innerHTML="";$("#fcAgain").disabled=$("#fcKnow").disabled=true;$("#fcInfo").textContent="";FC.deck=[];return;}
+  const w=FC.deck[FC.i],dir=$("#fcDir").value,hint=$("#fcHint").checked;
+  const zh=`<div class="big">${esc(w.c)}</div>`,py=`<div class="mid" style="color:var(--accent)">${esc(w.p)}</div>`,ru=`<div class="mid">${esc(w.r)}</div>`;
+  if(dir==="zh"){$("#fcFront").innerHTML=zh+(hint?py:"");$("#fcBack").innerHTML=zh+py+ru;}
+  else if(dir==="ru"){$("#fcFront").innerHTML=ru+(hint?py:"");$("#fcBack").innerHTML=zh+py+ru;}
+  else{$("#fcFront").innerHTML=py;$("#fcBack").innerHTML=zh+py+ru;}
+  $("#fcInfo").textContent=(FC.i+1)+" / "+FC.deck.length;
+}
+
+/* ========== теория: виды ========== */
+const ASP=[
+ ["看","смотреть, читать",[["看见","увидеть"],["看懂","понять"],["看完","дочитать, досмотреть"]]],
+ ["听","слушать",[["听见","услышать"],["听懂","понять на слух"],["听错","ослышаться"]]],
+ ["找","искать",[["找到","найти"]]],
+ ["学","учиться",[["学会","научиться"],["学好","выучить как следует"]]],
+ ["睡","спать",[["睡着","уснуть"],["睡到","проспать до…"]]],
+ ["洗","мыть, стирать",[["洗干净","отмыть дочиста"]]],
+ ["吃","есть",[["吃完","доесть"],["吃光","съесть подчистую"]]],
+ ["写","писать",[["写完","дописать"],["写错","написать с ошибкой"],["写好","дописать (готово)"]]],
+ ["买","покупать",[["买到","купить, достать"],["买好","купить заранее"]]]
+];
+function initAsp(){
+  $("#asp").innerHTML=ASP.map(a=>`<div class="tile"><div class="tin"><div class="side"><span class="lab">процесс · несов. вид</span><div class="c">${a[0]}</div><div class="ru">${a[1]}</div></div><div class="side b"><span class="lab">результат · сов. вид</span>${a[2].map(r=>`<div class="rline"><b>${r[0]}</b> <span class="py">${CMAP[r[0]]?CMAP[r[0]][1]:""}</span><br>${r[1]}</div>`).join("")}</div></div></div>`).join("");
+  $$("#asp .tile").forEach(t=>t.onclick=()=>t.classList.toggle("flip"));
+}
+
+/* ========== каталог ========== */
+function exHTML(e){return `<div class="gex">${e[3]?`<span class="gtag">${e[3]}</span><br>`:""}${mk(e[0])}<span class="py">${e[1]}</span><span class="tr">${e[2]}</span></div>`;}
+function initCatalog(){
+  $("#mNav").innerHTML=MORPH.map(m=>`<a href="#m-${m.id}" class="${m.c.length>1?"w2":""}">${m.c}<small>${m.p}</small></a>`).join("");
+  $("#mWrap").innerHTML=GROUPS.map(G=>`<div class="mgroup reveal"><h3><span class="gl">группа ${G.g}</span>${G.t} <span class="zh">${G.zh}</span></h3><div class="mgrid">${
+    MORPH.filter(m=>m.g===G.g).map(m=>`<div class="mor" id="m-${m.id}"><div class="mh"><div class="seal${m.c.length>1?" w2":""}">${m.c}</div><div class="mt">${m.m}<span class="py">${m.p}</span></div></div>
+      <div class="desc">${m.desc}</div><div class="verbs"><span>сочетания</span><b>${m.verbs}</b></div>
+      ${m.ex.map(exHTML).join("")}
+      ${m.note?`<div class="note2">${m.note}</div>`:""}${m.trap?`<div class="trap">${m.trap}</div>`:""}</div>`).join("")}</div></div>`).join("");
+}
+
+/* ========== П1: выбор морфемы ========== */
+const P1=[
+ ["我叫了你三{次}，你没听___吗？","Wǒ jiàole nǐ sān cì, nǐ méi tīng___ ma?","Я звал тебя три раза — ты не услышал?",["见","懂","完"],"见","Звук просто не дошёл до ушей — это 听见 «услышать». 听懂 — про понимание смысла."],
+ ["老师，您说的话我都听___了。","Lǎoshī, nín shuō de huà wǒ dōu tīng___ le.","Учитель, я понял всё, что вы сказали.",["懂","开","光"],"懂","Услышал и понял смысл — 听懂."],
+ ["作业我没写___，不能去玩。","Zuòyè wǒ méi xiě___, bù néng qù wán.","Я не дописал домашку, поэтому не могу пойти гулять.",["完","见","走"],"完","Работа не доведена до конца — 没写完."],
+ ["我找了一个小时手机，可是没找___。","Wǒ zhǎole yí ge xiǎoshí shǒujī, kěshì méi zhǎo___.","Я час искал телефон, но так и не нашёл.",["到","完","懂"],"到","«Найти» — результат усилий: 找到. Первая половина (找了) — процесс, вторая — результата нет."],
+ ["外面很冷，{穿}___大衣吧！","Wàimian hěn lěng, chuān___ dàyī ba!","На улице холодно, надень пальто!",["上","开","成"],"上","Одежда «соединяется» с телом — 穿上."],
+ ["对不起，我{把}“四”听___了“十”。","Duìbuqǐ, wǒ bǎ “sì” tīng___le “shí”.","Простите, я услышал «четыре» как «десять».",["成","好","掉"],"成","A превратилось в B — 把 A 听成 B."],
+ ["饭做___了，大家来吃吧！","Fàn zuò___ le, dàjiā lái chī ba!","Еда готова, все к столу!",["好","光","死"],"好","Готово к употреблению — 做好. Это не «хорошо приготовили», а «готово»."],
+ ["蛋糕太好吃了，我们都吃___了，一个也没有了。","Dàngāo tài hǎochī le, wǒmen dōu chī___ le, yí ge yě méiyǒu le.","Пирожные такие вкусные — мы съели всё подчистую, ни одного не осталось.",["光","见","会"],"光","«Ни одного не осталось» — без остатка: 吃光."],
+ ["这不是“买”，是“卖”，你写___了。","Zhè bú shì “mǎi”, shì “mài”, nǐ xiě___ le.","Это не 买, а 卖 — ты написал неправильно.",["错","对","好"],"错","Написан не тот знак — 写错."],
+ ["昨天晚上我很{累}，九点就睡___了。","Zuótiān wǎnshang wǒ hěn lèi, jiǔ diǎn jiù shuì___ le.","Вчера вечером я очень устал и уснул уже в девять.",["着","见","开"],"着","«Уснуть» — только 睡着 (zháo)."],
+ ["我学了三个月，学___开车了！","Wǒ xuéle sān ge yuè, xué___ kāichē le!","Я учился три месяца — и научился водить!",["会","懂","成"],"会","Навык освоен — 学会."],
+ ["请打___你们的书。","Qǐng dǎ___ nǐmen de shū.","Откройте, пожалуйста, ваши книги.",["开","上","到"],"开","Открыть — 打开. Закрыть книгу — 合上."],
+ ["我弟弟{拿}___了我的手机，现在我没有手机了。","Wǒ dìdi ná___le wǒ de shǒujī, xiànzài wǒ méiyǒu shǒujī le.","Брат унёс мой телефон, теперь у меня его нет.",["走","开","好"],"走","Предмет удалился вместе с человеком — 拿走."],
+ ["星期天我常常睡___十一点。","Xīngqītiān wǒ chángcháng shuì___ shíyī diǎn.","По воскресеньям я часто сплю до одиннадцати.",["到","着","完"],"到","После морфемы стоит время — «до какого момента»: 睡到十一点."],
+ ["今天{爬}了五个小时{山}，我{累}___了！","Jīntiān pále wǔ ge xiǎoshí shān, wǒ lèi___ le!","Сегодня пять часов лезли в гору — я устал до смерти!",["死","掉","光"],"死","Преувеличение «до смерти» — 累死了."],
+ ["睡觉以前，请关___手机。","Shuìjiào yǐqián, qǐng guān___ shǒujī.","Перед сном выключите, пожалуйста, телефон.",["掉","到","成"],"掉","Выключить, «убрать» — 关掉."],
+ ["这些水果我都洗___了，可以吃了。","Zhèxiē shuǐguǒ wǒ dōu xǐ___ le, kěyǐ chī le.","Эти фрукты я все отмыл — можно есть.",["干净","清楚","光"],"干净","Чистота после мытья — 洗干净."],
+ ["我没听___，请再说一{遍}。","Wǒ méi tīng___, qǐng zài shuō yí biàn.","Я не расслышал как следует, повторите, пожалуйста.",["清楚","干净","掉"],"清楚","Отчётливо, без путаницы — 听清楚."],
+ ["你说___了！今天真的很冷。","Nǐ shuō___ le! Jīntiān zhēn de hěn lěng.","Ты был прав! Сегодня правда холодно.",["对","错","完"],"对","Сказал правильно — 说对."],
+ ["这张桌子太大了，我一个人{搬}不___。","Zhè zhāng zhuōzi tài dà le, wǒ yí ge rén bān bu ___.","Этот стол слишком большой, мне одному его не сдвинуть.",["动","懂","光"],"动","动 dòng «двигать», не 懂 dǒng «понимать». 搬不动 — «не сдвинуть»."]
+];
+function initP1(){
+  const st=S.get("p1",{});const order=S.get("p1o",null)||P1.map((x,i)=>i);S.set("p1o",order);
+  $("#p1Wrap").innerHTML=P1.map((q,i)=>{const opts=S.get("p1op"+i,null)||shuffle(q[3]);S.set("p1op"+i,opts);
+    return `<div class="qitem" data-i="${i}"><div class="s"><span class="n">${i+1}</span>${mk(q[0]).replace("___",'<span class="gap">　</span>')}</div><span class="py">${q[1]}</span><span class="tr">${q[2]}</span><div class="opts">${opts.map(o=>`<button>${o}</button>`).join("")}</div><div class="why">${q[5]}</div></div>`;}).join("");
+  $$("#p1Wrap .qitem").forEach(el=>{const i=+el.dataset.i,q=P1[i];
+    const apply=(v)=>{const ok=v===q[4];el.classList.add(ok?"ok":"bad");$(".gap",el).textContent=q[4];
+      $$("button",el).forEach(b=>{b.disabled=true;if(b.textContent===q[4])b.classList.add("right");else if(b.textContent===v)b.classList.add("wrong");});};
+    if(st[i])apply(st[i]);
+    $$("button",el).forEach(b=>b.onclick=()=>{if(st[i])return;st[i]=b.textContent;S.set("p1",st);apply(b.textContent);if(b.textContent!==q[4])el.classList.add("shake");p1Score();});
+  });
+  $("#p1Reset").onclick=()=>{S.set("p1",{});P1.forEach((q,i)=>S.set("p1op"+i,null));initP1();};
+  p1Score();
+}
+function p1Score(){const st=S.get("p1",{});const n=Object.keys(st).length,ok=Object.keys(st).filter(i=>st[i]===P1[i][4]).length;
+  $("#p1Count").textContent=`Ответов: ${n} / ${P1.length} · верно: ${ok}`;bar("#p1Bar",n,P1.length);prog("p1",n,P1.length);}
+
+/* ========== П2: переводы ========== */
+const P2=[
+ ["Я досмотрел этот фильм.",[/^我(已经)?看完(了)?这(个|部)电影(了)?$/,/^这(个|部)电影我(已经)?看完了$/],"我看完了这个电影。/ 这个电影我看完了。","Фильмы считают через 部 bù, но 个 тоже понятно.","看 + 完 · 电影"],
+ ["Вы поняли? — Нет, не понял.",[/^(你|您|你们)(听|看)?懂了(吗|没有)(我)?(还)?没(有)?(听|看)?懂$/],"你听懂了吗？——没听懂。","В ответе нет 了: 没听懂.","听 + 懂 · 没"],
+ ["Я нашёл свой телефон!",[/^(太好了)?我(已经)?找到(了)?(我的)?手机(了)?$/,/^(我的)?手机我(已经)?找到了$/],"我找到我的手机了！/ 我的手机我找到了！","«Нашёл» — 找到, не 找了.","找 + 到 · 手机"],
+ ["Мама уже приготовила ужин.",[/^妈妈已经做好(了)?晚饭(了)?$/,/^晚饭妈妈已经做好了$/,/^妈妈已经把晚饭做好了$/],"妈妈已经做好晚饭了。/ 晚饭妈妈已经做好了。","Еда готова — 做好. 已经 «уже» стоит перед глаголом.","已经 · 做 + 好 · 晚饭"],
+ ["Я не услышал, что сказал учитель.",[/^我没(有)?听(见|到)老师说(的话|什么|了什么)$/,/^老师说(的话|什么|了什么)我没(有)?听(见|到)$/],"我没听见老师说的话。/ 老师说什么我没听见。","Не услышал — 没听见 (или 没听到), без 了.","没 · 听 + 见 · 老师说的话"],
+ ["Мы сели не на тот автобус!",[/^我们坐错(了)?车(了)?$/],"我们坐错车了！","«Не тот» транспорт — 坐错.","坐 + 错 · 车"],
+ ["Он научился плавать.",[/^他(已经)?学会(了)?游泳(了)?$/],"他学会游泳了。","Навык освоен — 学会.","学 + 会 · 游泳"],
+ ["Ребёнок уснул.",[/^(孩子|小孩|小孩子)(已经)?睡着了$/],"孩子睡着了。","Только 睡着 (zháo).","孩子 · 睡 + 着"],
+ ["Откройте, пожалуйста, окно.",[/^(请)?(你|您|你们)?打开窗户(吧)?$/,/^(请)?(你|您|你们)?把窗户打开(吧)?$/],"请打开窗户。","窗户 chuānghu — окно.","请 · 打 + 开 · 窗户 chuānghu"],
+ ["Я написал этот иероглиф неправильно.",[/^这个(汉)?字我写错了$/,/^我写错了这个(汉)?字$/,/^我把这个(汉)?字写错了$/],"这个字我写错了。/ 我写错了这个字。","Неправильно — 写错.","这个字 · 写 + 错"],
+ ["Все деньги я потратил.",[/^(我的)?钱(我)?都花光了$/,/^我(把钱都花光了|的钱都花光了)$/,/^我花光了(所有的)?钱$/],"钱我都花光了。/ 我的钱都花光了。","Без остатка — 光; 都 перед глаголом.","钱 · 都 · 花 huā + 光"],
+ ["Если не выучить как следует китайский, хорошую работу не найти.",[/^(如果)?不学好汉语(的话)?就?找不到好(的)?工作(了)?$/],"不学好汉语，就找不到好工作。","不 перед глаголом с морфемой — условие; 找不到 — «не найти, не получится».","不 · 学 + 好 · 就 · 找不到"]
+];
+function initP2(){
+  const st=S.get("p2",{});
+  $("#p2Wrap").innerHTML=P2.map((q,i)=>`<div class="qitem trw" data-i="${i}"><div class="ru"><span class="n">${i+1}</span>${q[0]}</div><input class="inp" placeholder="иероглифами…" value="${esc(st[i]||"")}"><div class="model">Образец: <span class="zh">${q[2]}</span><br><span style="color:var(--accent2)">${q[3]}</span></div></div>`).join("");
+  $$("#p2Wrap input").forEach((inp,i)=>inp.oninput=()=>{st[i]=inp.value;S.set("p2",st);});
+  const chk=(silent)=>{let ok=0,n=0;const res=S.get("p2r",{});
+    $$("#p2Wrap .qitem").forEach(el=>{const i=+el.dataset.i,v=normZh($("input",el).value);el.classList.remove("ok","bad");
+      if(!v){delete res[i];return;}n++;const good=P2[i][1].some(r=>r.test(v));res[i]=good?1:0;if(good)ok++;el.classList.add(good?"ok":"bad");});
+    S.set("p2r",res);if(!silent){$("#p2Res").className="msg "+(ok===P2.length?"ok":"bad");$("#p2Res").textContent=`Верно: ${ok} из ${P2.length}`+(n<P2.length?` · пустых: ${P2.length-n}`:"");}
+    prog("p2",ok,P2.length);};
+  $("#p2Check").onclick=()=>chk(false);
+  $("#p2Clr").onclick=()=>{S.set("p2",{});S.set("p2r",{});initP2();};
+  if(Object.keys(S.get("p2r",{})).length)chk(true);else prog("p2",0,P2.length);
+  initP2b();
+}
+const P2B=[
+ ["我睡了，可是没[睡着]。","Wǒ shuì le, kěshì méi shuìzháo.","Я лёг спать, но не уснул."],
+ ["他{把}“四”[听成]了“十”。","Tā bǎ “sì” tīngchéngle “shí”.","Он услышал «четыре» как «десять» (ему послышалось «десять»)."],
+ ["饺子[卖光]了，明天再来吧！","Jiǎozi màiguāng le, míngtiān zài lái ba!","Пельмени все распроданы, приходите завтра!"],
+ ["我看了，可是没[看懂]。","Wǒ kàn le, kěshì méi kàndǒng.","Я прочитал (посмотрел), но не понял."],
+ ["不[写完]作业，就不能玩。","Bù xiěwán zuòyè, jiù bù néng wán.","Пока не допишешь домашку, гулять нельзя."]
+];
+function initP2b(){
+  const st=S.get("p2b",{});
+  $("#p2bWrap").innerHTML=P2B.map((q,i)=>`<div class="qitem trw${st["s"+i]?" show":""}" data-i="${i}"><div class="s" style="font-family:var(--kai);font-size:22px;font-weight:700"><span class="n">${i+1}</span>${mk(q[0])}</div><span class="py">${q[1]}</span><textarea class="inp" placeholder="ваш перевод…">${esc(st[i]||"")}</textarea><div class="row-btns" style="margin-top:4px"><button class="btn small">показать образец</button></div><div class="model">Образец: <b>${q[2]}</b></div></div>`).join("");
+  $$("#p2bWrap .qitem").forEach(el=>{const i=+el.dataset.i;$("textarea",el).oninput=e=>{st[i]=e.target.value;S.set("p2b",st);};
+    $("button",el).onclick=()=>{el.classList.add("show");st["s"+i]=1;S.set("p2b",st);};});
+}
+
+/* ========== общий поповер ========== */
+const POP=$("#pop");let popCb=null;
+function openPop(anchor,title,opts,cb){
+  POP.innerHTML=`<span class="ph">${title}</span>`+opts.map(o=>`<button>${o}</button>`).join("")+`<button data-x="1" style="font-family:var(--sans);font-size:12px">✕</button>`;
+  POP.classList.add("on");const b=anchor.getBoundingClientRect();
+  POP.style.left=Math.max(8,Math.min(b.left+scrollX,scrollX+innerWidth-POP.offsetWidth-10))+"px";POP.style.top=(b.bottom+scrollY+6)+"px";
+  popCb=cb;$$("button",POP).forEach(x=>x.onclick=e=>{e.stopPropagation();POP.classList.remove("on");if(!x.dataset.x)popCb(x.textContent);});
+}
+document.addEventListener("click",e=>{if(!e.target.closest("#pop")&&!e.target.closest(".slot")&&!e.target.closest(".gp"))POP.classList.remove("on");});
+
+/* ========== П3: собери глагол ========== */
+const P3V=["吃","找","听","打","学","写","洗","看","睡","拿","穿","说","买","坐"];
+const P3R=["光","到","见","错","会","成","干净","懂","完","着","走","上","好","掉","开"];
+const P3=[
+ ["Тарелка пустая — от пельменей не осталось <i>ни одного</i>.",["吃光"],"Ни одного не осталось — 吃光. 吃完 значит просто «доел»."],
+ ["Вы час искали ключи — и вот они, под диваном!",["找到","找着"],"Результат поиска — 找到 (на севере говорят и 找着)."],
+ ["В тишине вдруг раздался звонок в дверь. Вы его…",["听见","听到"],"Звук дошёл до ушей — 听见 / 听到."],
+ ["Вы набрали номер, а там незнакомый голос: «Вы ошиблись».",["打错"],"Ошибиться номером — 打错 (电话)."],
+ ["Три месяца в автошколе — и теперь вы умеете водить.",["学会"],"Навык освоен — 学会."],
+ ["Вместо 买 у вас в тетради оказалось 卖.",["写错","写成"],"Написали не тот знак — 写错; «написали A как B» — 写成."],
+ ["Рубашка после стирки как новая — ни пятнышка.",["洗干净"],"Дочиста — 洗干净."],
+ ["Лекция была на китайском — и вы поняли всё!",["听懂"],"Поняли на слух — 听懂."],
+ ["Последняя страница — книга дочитана.",["看完"],"Довели чтение до конца — 看完."],
+ ["Легли в одиннадцать, но только в два ночи наконец…",["睡着"],"Уснуть — 睡着 (zháo)."],
+ ["Брат взял ваш рюкзак и ушёл вместе с ним.",["拿走"],"Унести — 拿走."],
+ ["На улице мороз, и вы натягиваете пальто.",["穿上"],"Надеть — 穿上."]
+];
+function initP3(){
+  const st=S.get("p3",{});
+  $("#p3Wrap").innerHTML=P3.map((q,i)=>{const s=st[i]||{};return `<div class="qitem" data-i="${i}"><div class="bld"><div class="sit"><span class="n">${i+1}</span>${q[0]}</div><div class="slots"><button class="slot v${s.v?" set":""}" data-k="v">${s.v||"глагол"}</button><span class="plus">+</span><button class="slot${s.r?" set":""}" data-k="r">${s.r||"морфема"}</button></div></div><div class="why"></div></div>`;}).join("");
+  $$("#p3Wrap .qitem").forEach(el=>{const i=+el.dataset.i;
+    $$(".slot",el).forEach(sl=>sl.onclick=e=>{e.stopPropagation();const k=sl.dataset.k;
+      openPop(sl,k==="v"?"глагол":"морфема",k==="v"?P3V:P3R,val=>{st[i]=Object.assign({},st[i],{[k]:val});S.set("p3",st);sl.textContent=val;sl.classList.add("set");el.classList.remove("ok","bad");$(".why",el).innerHTML="";});});});
+  $("#p3Check").onclick=()=>p3Check(false);
+  $("#p3Clr").onclick=()=>{S.set("p3",{});S.set("p3c",0);initP3();prog("p3",0,P3.length);$("#p3Res").textContent="";};
+  if(S.get("p3c",0))p3Check(true);else prog("p3",0,P3.length);
+}
+function p3Check(silent){
+  const st=S.get("p3",{});let ok=0;S.set("p3c",1);
+  $$("#p3Wrap .qitem").forEach(el=>{const i=+el.dataset.i,s=st[i]||{},q=P3[i];el.classList.remove("ok","bad");
+    if(!s.v||!s.r){$(".why",el).innerHTML="";return;}const w=s.v+s.r,good=q[1].indexOf(w)>=0;if(good)ok++;el.classList.add(good?"ok":"bad");
+    const c=CMAP[q[1][0]];$(".why",el).innerHTML=(good?"✓ ":"✗ Ваш вариант: <span class='zh'>"+w+"</span>. ")+`Ответ: <span class="zh" style="font-size:19px">${q[1].join(" / ")}</span> <span class="py" style="display:inline">${c?c[1]:""}</span> <span class="tr">— ${c?c[2]:""}</span>. ${q[2]}`;});
+  if(!silent){$("#p3Res").className="msg "+(ok===P3.length?"ok":"bad");$("#p3Res").textContent=`Верно: ${ok} из ${P3.length}`;}
+  prog("p3",ok,P3.length);
+}
+
+/* ========== П4: найди ошибку ========== */
+const P4=[
+ [["我","没","看完","了","这本书","。"],3,"我没看完这本书。","Я не дочитал эту книгу.","После 没 частица 了 не ставится."],
+ [["我","看","了","完","电影","了","。"],2,"我看完电影了。","Я досмотрел фильм.","Между глаголом и морфемой ничего не вставляют: 看完 — одно целое."],
+ [["昨天","我","不","找到","我的","手机","。"],2,"昨天我没找到我的手机。","Вчера я не нашёл свой телефон.","О прошлом — 没, а не 不."],
+ [["太好了","！","我","找","了","我的","手机","！"],3,"太好了！我找到了我的手机！","Ура! Я нашёл свой телефон!","找 — «искать»; «нашёл» — 找到."],
+ [["你","听懂","了","吗","？——","我","没","听懂","了","。"],8,"你听懂了吗？——我没听懂。","Ты понял? — Я не понял.","В отрицании с 没 нет 了."],
+ [["外面","很","冷","，","你","{穿}","开","大衣","吧","！"],6,"外面很冷，你穿上大衣吧！","На улице холодно, надень пальто!","Надеть — 穿上; 开 значит «открыть, раздвинуть»."],
+ [["今天","我","很","{累}死","了","！"],2,"今天我累死了！","Сегодня я устал до смерти!","С 死了 не используют 很 — 死 уже само выражает предельную степень."],
+ [["他","{把}","“四”","听","到","了","“十”","。"],4,"他把“四”听成了“十”。","Он услышал «четыре» как «десять».","A превратилось в B — 成, не 到."],
+ [["孩子","睡","到","了","，","我们","去","外面","聊天","吧","。"],2,"孩子睡着了，我们去外面聊天吧。","Ребёнок уснул, пойдём поболтаем на улице.","«Уснуть» — 睡着. 睡到 требует времени: 睡到十点 «спать до десяти»."],
+ [["这个","字","你","写","好","了","：","这","不是","“买”","，","是","“卖”","。"],4,"这个字你写错了：这不是“买”，是“卖”。","Этот иероглиф ты написал неправильно: это не 买, а 卖.","好 — «готово»; ошибка — 错."]
+];
+function initP4(){
+  const st=S.get("p4",{}),er=S.get("p4e",0);
+  $("#p4Wrap").innerHTML=P4.map((q,i)=>`<div class="qitem" data-i="${i}"><div class="tok"><span class="n">${i+1}</span>${q[0].map((t,j)=>/^[，。！？：——？—]+$/.test(t)?`<span class="pt">${t}</span>`:`<button data-j="${j}">${mk(t)}</button>`).join("")}</div><span class="tr">${q[3]}</span><div class="why">Верно: <span class="zh" style="font-size:20px">${q[2]}</span><br>${q[4]}</div></div>`).join("");
+  $$("#p4Wrap .qitem").forEach(el=>{const i=+el.dataset.i,q=P4[i];
+    const solve=()=>{el.classList.add("ok","done");const b=$(`button[data-j="${q[1]}"]`,el);if(b)b.classList.add("hit");};
+    if(st[i])solve();
+    $$("button",el).forEach(b=>b.onclick=e=>{if(st[i])return;
+      if(+b.dataset.j===q[1]){st[i]=1;S.set("p4",st);solve();p4Score();}
+      else{b.classList.add("miss");el.classList.add("shake");setTimeout(()=>{el.classList.remove("shake");b.classList.remove("miss");},600);S.set("p4e",S.get("p4e",0)+1);p4Score();}});
+  });
+  $("#p4Reset").onclick=()=>{S.set("p4",{});S.set("p4e",0);initP4();};
+  p4Score();
+}
+function p4Score(){const st=S.get("p4",{}),n=Object.keys(st).length;$("#p4Count").textContent=`Найдено: ${n} / ${P4.length}`;$("#p4Err").textContent=S.get("p4e",0)?`промахов: ${S.get("p4e",0)}`:"";bar("#p4Bar",n,P4.length);prog("p4",n,P4.length);}
+
+/* ========== П5: мемори ========== */
+const MEM=["听懂","看见","找到","学会","吃光","写错","睡着","打开","拿走","洗干净","听错","穿上","关掉","累死了","看完","做好","听清楚","坐错"];
+let MS={};
+function initMem(){
+  const pick=shuffle(MEM).slice(0,8);
+  const cards=shuffle(pick.map(w=>({k:w,t:"z"})).concat(pick.map(w=>({k:w,t:"r"}))));
+  MS={cards,open:[],got:0,moves:0,lock:false};
+  $("#memGrid").innerHTML=cards.map((c,i)=>{const d=CMAP[c.k];return `<div class="mc" data-i="${i}"><div class="mi"><div class="fa f">✦</div><div class="fa b">${c.t==="z"?`<div class="c">${c.k}</div><div class="py" style="font-size:12px">${d[1]}</div>`:`<div class="r">${d[2]}</div>`}</div></div></div>`;}).join("");
+  $$("#memGrid .mc").forEach(el=>el.onclick=()=>memClick(el));
+  memInfo();
+}
+function memClick(el){
+  if(MS.lock||el.classList.contains("up")||el.classList.contains("got"))return;
+  el.classList.add("up");MS.open.push(el);
+  if(MS.open.length===2){MS.moves++;const[a,b]=MS.open,ca=MS.cards[+a.dataset.i],cb=MS.cards[+b.dataset.i];
+    if(ca.k===cb.k&&ca.t!==cb.t){a.classList.add("got");b.classList.add("got");MS.got++;MS.open=[];
+      if(MS.got===8){const best=S.get("memBest",0);if(!best||MS.moves<best)S.set("memBest",MS.moves);S.set("memDone",1);prog("p5",1,1);}}
+    else{MS.lock=true;setTimeout(()=>{a.classList.remove("up");b.classList.remove("up");MS.open=[];MS.lock=false;},950);}
+    memInfo();}
+}
+function memInfo(){const best=S.get("memBest",0);$("#memInfo").textContent=`Пар: ${MS.got} / 8 · ходов: ${MS.moves}`+(MS.got===8?" · 完成！":"")+(best?` · рекорд: ${best}`:"");}
+
+/* ========== ЧТЕНИЕ ========== */
+const READ=[
+ [["星期五晚上，王朋给安娜打电话：“明天下午我们一起去看{京剧}吧！{票}我已经[买好]了。”","Xīngqīwǔ wǎnshang, Wáng Péng gěi Ānnà dǎ diànhuà: “Míngtiān xiàwǔ wǒmen yìqǐ qù kàn jīngjù ba! Piào wǒ yǐjīng mǎihǎo le.”","В пятницу вечером Ван Пэн позвонил Анне: «Давай завтра днём сходим вместе на пекинскую оперу! Билеты я уже купил»."],
+  ["“太好了！几点？”安娜问。","“Tài hǎo le! Jǐ diǎn?” Ānnà wèn.","«Отлично! Во сколько?» — спросила Анна."],
+  ["“四点，在地铁站见。”","“Sì diǎn, zài dìtiězhàn jiàn.”","«В четыре, встречаемся у метро»."],
+  ["安娜说：“好，我[{记}清楚]了！”","Ānnà shuō: “Hǎo, wǒ jì qīngchu le!”","Анна сказала: «Хорошо, я точно запомнила!»"],
+  ["可是她没[听清楚]：王朋说的是“四点”，她[听成]了“十点”。","Kěshì tā méi tīng qīngchu: Wáng Péng shuō de shì “sì diǎn”, tā tīngchéngle “shí diǎn”.","Но она не расслышала как следует: Ван Пэн сказал «в четыре», а ей послышалось «в десять»."]],
+ [["星期六早上八点，{闹钟}{响}了。","Xīngqīliù zǎoshang bā diǎn, nàozhōng xiǎng le.","В субботу в восемь утра зазвонил будильник."],
+  ["安娜[关掉]闹钟，{又}[睡着]了。","Ānnà guāndiào nàozhōng, yòu shuìzháo le.","Анна выключила будильник и снова уснула."],
+  ["她[睡到]了九点半！","Tā shuìdàole jiǔ diǎn bàn!","Она проспала до половины десятого!"],
+  ["“[完了]！{只有}半个小时了！”","“Wán le! Zhǐyǒu bàn ge xiǎoshí le!”","«Всё пропало! Осталось всего полчаса!»"],
+  ["她想给王朋打电话，可是[找不到]手机了。","Tā xiǎng gěi Wáng Péng dǎ diànhuà, kěshì zhǎo bu dào shǒujī le.","Она хотела позвонить Ван Пэну, но никак не могла найти телефон."],
+  ["她找了二十分钟，{最后}在{床}下面[找到]了。","Tā zhǎole èrshí fēnzhōng, zuìhòu zài chuáng xiàmiàn zhǎodào le.","Она искала двадцать минут и в конце концов нашла его под кроватью."],
+  ["安娜没吃早饭，[{穿}上]大衣就出门了。","Ānnà méi chī zǎofàn, chuānshàng dàyī jiù chūmén le.","Анна не позавтракала: накинула пальто — и бегом из дома."]],
+ [["在地铁里，她[看错]了{地图}，[坐错]了车。","Zài dìtiě lǐ, tā kàncuòle dìtú, zuòcuòle chē.","В метро она неправильно посмотрела схему и села не на тот поезд."],
+  ["十点四十，安娜{才}到那个地铁站。她[{累}死]了，也[饿死]了！","Shí diǎn sìshí, Ānnà cái dào nà ge dìtiězhàn. Tā lèi sǐ le, yě è sǐ le!","Только в 10:40 Анна добралась до нужной станции. Она смертельно устала и умирала от голода!"],
+  ["可是王朋不在那里。安娜给他打电话。","Kěshì Wáng Péng bú zài nàlǐ. Ānnà gěi tā dǎ diànhuà.","Но Ван Пэна там не было. Анна позвонила ему."],
+  ["王朋{还}在睡觉。他说：“喂？安娜？现在{才}十点多……”","Wáng Péng hái zài shuìjiào. Tā shuō: “Wéi? Ānnà? Xiànzài cái shí diǎn duō……”","Ван Пэн ещё спал. Он сказал: «Алло? Анна? Сейчас ведь только начало одиннадцатого…»"],
+  ["安娜问：“你{不是}说十点吗？”","Ānnà wèn: “Nǐ bú shì shuō shí diǎn ma?”","Анна спросила: «Разве ты не сказал „в десять“?»"],
+  ["王朋{笑}了：“我说的是下午四点！你[听错]了！”","Wáng Péng xiào le: “Wǒ shuō de shì xiàwǔ sì diǎn! Nǐ tīngcuò le!”","Ван Пэн рассмеялся: «Я сказал — в четыре часа дня! Ты ослышалась!»"]],
+ [["安娜也笑了。她在旁边的咖啡馆买了三个包子，都[吃光]了。","Ānnà yě xiào le. Tā zài pángbiān de kāfēiguǎn mǎile sān ge bāozi, dōu chīguāng le.","Анна тоже рассмеялась. В кафе рядом она купила три баоцзы и съела их подчистую."],
+  ["下午四点，他们一起去看了京剧。","Xiàwǔ sì diǎn, tāmen yìqǐ qù kànle jīngjù.","В четыре часа дня они вместе пошли на пекинскую оперу."],
+  ["安娜没[听懂]{演员}唱的是什么，可是她[看见]了很多漂亮的衣服和{脸谱}。","Ānnà méi tīngdǒng yǎnyuán chàng de shì shénme, kěshì tā kànjiànle hěn duō piàoliang de yīfu hé liǎnpǔ.","Анна не поняла, о чём поют актёры, но увидела много красивых костюмов и масок-лянпу."],
+  ["王朋说：“红色的{脸}是好人，{白色}的脸是{坏人}。”","Wáng Péng shuō: “Hóngsè de liǎn shì hǎorén, báisè de liǎn shì huàirén.”","Ван Пэн объяснил: «Красное лицо — хороший человек, белое — злодей»."],
+  ["安娜笑了：“这个我[看懂]了！”","Ānnà xiào le: “Zhège wǒ kàndǒng le!”","Анна улыбнулась: «Вот это я поняла!»"]],
+ [["晚上，安娜在{日记}里写：“今天我[学会]了一个新{词}：{倒霉}。”","Wǎnshang, Ānnà zài rìjì lǐ xiě: “Jīntiān wǒ xuéhuìle yí ge xīn cí: dǎoméi.”","Вечером Анна написала в дневнике: «Сегодня я выучила новое слово: 倒霉 — „не везёт“»."],
+  ["“我还[学会]了：打电话的时候，{一定}要[听清楚]！”","“Wǒ hái xuéhuìle: dǎ diànhuà de shíhou, yídìng yào tīng qīngchu!”","«А ещё я усвоила: по телефону обязательно нужно слушать внимательно!»"]]
+];
+function initRead(){
+  $("#rText").innerHTML=`<h3>${mk("{倒霉}的星期六")}</h3><span class="py" style="display:block;text-align:center">Dǎoméi de xīngqīliù</span><span class="sub tr">Невезучая суббота</span>`+
+    READ.map(p=>`<div class="para">${p.map(s=>`<span class="sn">${mk(s[0])}<span class="py">${s[1]}</span><span class="tr">${s[2]}</span></span>`).join("")}</div>`).join("");
+  const r=$("#reader"),hl=S.get("rhl",0),ln=S.get("rln",1);
+  r.classList.toggle("hl",!!hl);r.classList.toggle("lines",!!ln);$("#rHl").classList.toggle("accent",!!hl);$("#rLines").classList.toggle("primary",!!ln);
+  $("#rHl").onclick=()=>{const v=!r.classList.contains("hl");r.classList.toggle("hl",v);S.set("rhl",v?1:0);$("#rHl").classList.toggle("accent",v);upd();};
+  $("#rLines").onclick=()=>{const v=!r.classList.contains("lines");r.classList.toggle("lines",v);S.set("rln",v?1:0);$("#rLines").classList.toggle("primary",v);};
+  const words={};$$("#rText .nw").forEach(n=>words[n.dataset.c]=1);
+  $("#rFoot").innerHTML="Новые слова (они есть в словаре урока): "+Object.keys(words).map(w=>`<b>${w}</b> ${NEWW[w]?NEWW[w][0]:""} — ${NEWW[w]?NEWW[w][1]:""}`).join("; ")+".";
+  const upd=()=>{$("#rInfo").textContent=r.classList.contains("hl")?`результативных сочетаний в тексте: ${$$("#rText em.rc").length}`:"";};upd();
+}
+
+/* ========== Р1: 对 / 错 ========== */
+const R1=[
+ ["王朋已经买好票了。","Wáng Péng yǐjīng mǎihǎo piào le.","Ван Пэн уже купил билеты.",1,"票我已经买好了。"],
+ ["安娜听清楚了王朋说的时间。","Ānnà tīng qīngchule Wáng Péng shuō de shíjiān.","Анна чётко расслышала время, которое назвал Ван Пэн.",0,"她没听清楚：把“四点”听成了“十点”。"],
+ ["闹钟响了，可是安娜没听见。","Nàozhōng xiǎng le, kěshì Ānnà méi tīngjiàn.","Будильник зазвонил, но Анна его не услышала.",0,"Услышала! Она выключила будильник (关掉闹钟) и снова уснула."],
+ ["安娜在床下面找到了手机。","Ānnà zài chuáng xiàmiàn zhǎodàole shǒujī.","Анна нашла телефон под кроватью.",1,"最后在床下面找到了。"],
+ ["安娜吃完早饭才出门。","Ānnà chīwán zǎofàn cái chūmén.","Анна вышла из дома только после завтрака.",0,"安娜没吃早饭，穿上大衣就出门了。"],
+ ["十点四十，王朋在地铁站等安娜。","Shí diǎn sìshí, Wáng Péng zài dìtiězhàn děng Ānnà.","В 10:40 Ван Пэн ждал Анну у метро.",0,"王朋不在那里，他还在睡觉。"],
+ ["安娜在咖啡馆吃光了三个包子。","Ānnà zài kāfēiguǎn chīguāngle sān ge bāozi.","Анна в кафе съела подчистую три баоцзы.",1,"她买了三个包子，都吃光了。"],
+ ["安娜听懂了演员唱的是什么。","Ānnà tīngdǒngle yǎnyuán chàng de shì shénme.","Анна поняла, о чём поют актёры.",0,"安娜没听懂演员唱的是什么。"],
+ ["安娜看懂了：红色的脸是好人。","Ānnà kàndǒng le: hóngsè de liǎn shì hǎorén.","Анна поняла: красное лицо — хороший человек.",1,"“这个我看懂了！”"],
+ ["安娜在日记里写：她学会了新词“倒霉”。","Ānnà zài rìjì lǐ xiě: tā xuéhuìle xīn cí “dǎoméi”.","Анна написала в дневнике, что выучила новое слово 倒霉.",1,"今天我学会了一个新词：倒霉。"]
+];
+function initR1(){
+  const st=S.get("r1",{});
+  $("#r1Wrap").innerHTML=R1.map((q,i)=>`<div class="qitem" data-i="${i}"><div class="s"><span class="n">${i+1}</span>${q[0]}</div><span class="py">${q[1]}</span><span class="tr">${q[2]}</span><div class="opts"><button class="tfb" data-v="1">对 · верно</button><button class="tfb" data-v="0">错 · неверно</button></div><div class="why">В тексте: <span class="zh" style="font-size:18px">${q[4]}</span></div></div>`).join("");
+  $$("#r1Wrap .qitem").forEach(el=>{const i=+el.dataset.i,q=R1[i];
+    const apply=v=>{el.classList.add(v===q[3]?"ok":"bad");$$("button",el).forEach(b=>{b.disabled=true;if(+b.dataset.v===q[3])b.classList.add("right");else if(+b.dataset.v===v)b.classList.add("wrong");});};
+    if(st[i]!=null)apply(st[i]);
+    $$("button",el).forEach(b=>b.onclick=()=>{if(st[i]!=null)return;st[i]=+b.dataset.v;S.set("r1",st);apply(st[i]);r1Score();});});
+  $("#r1Reset").onclick=()=>{S.set("r1",{});initR1();};r1Score();
+}
+function r1Score(){const st=S.get("r1",{}),n=Object.keys(st).length,ok=Object.keys(st).filter(i=>st[i]===R1[i][3]).length;$("#r1Count").textContent=`Ответов: ${n} / ${R1.length} · верно: ${ok}`;bar("#r1Bar",n,R1.length);prog("r1",n,R1.length);}
+
+/* ========== Р2: порядок событий ========== */
+const R2=[
+ ["王朋[买好]了京剧票。","Wáng Péng mǎihǎole jīngjù piào.","Ван Пэн купил билеты на оперу."],
+ ["安娜{把}“四点”[听成]了“十点”。","Ānnà bǎ “sì diǎn” tīngchéngle “shí diǎn”.","Анне послышалось «в десять» вместо «в четыре»."],
+ ["安娜[关掉]闹钟，又[睡着]了。","Ānnà guāndiào nàozhōng, yòu shuìzháo le.","Анна выключила будильник и снова уснула."],
+ ["安娜在床下面[找到]了手机。","Ānnà zài chuáng xiàmiàn zhǎodàole shǒujī.","Анна нашла телефон под кроватью."],
+ ["安娜在地铁里[坐错]了车。","Ānnà zài dìtiě lǐ zuòcuòle chē.","Анна села в метро не на тот поезд."],
+ ["王朋说：“你[听错]了！”","Wáng Péng shuō: “Nǐ tīngcuò le!”","Ван Пэн сказал: «Ты ослышалась!»"],
+ ["安娜在咖啡馆[吃光]了三个包子。","Ānnà zài kāfēiguǎn chīguāngle sān ge bāozi.","Анна съела в кафе три баоцзы."],
+ ["安娜[看懂]了脸谱的颜色。","Ānnà kàndǒngle liǎnpǔ de yánsè.","Анна поняла, что значат цвета масок."],
+ ["安娜在日记里写了“倒霉”这个词。","Ānnà zài rìjì lǐ xiěle “dǎoméi” zhège cí.","Анна записала в дневник слово 倒霉."]
+];
+function initR2(){
+  let seq=S.get("r2",[]),pool=S.get("r2p",null);if(!pool){pool=shuffle(R2.map((x,i)=>i));S.set("r2p",pool);}
+  const card=(i,k)=>`<div class="ocard" data-i="${i}">${k?`<span class="k">${k}</span>`:""}<div>${mk(R2[i][0])}<span class="py">${R2[i][1]}</span><span class="tr">${R2[i][2]}</span></div></div>`;
+  const draw=()=>{$("#r2Pool").innerHTML=pool.filter(i=>seq.indexOf(i)<0).map(i=>card(i)).join("")||`<span class="tr" style="display:block">Все события разложены.</span>`;
+    $("#r2Seq").innerHTML=seq.map((i,k)=>card(i,k+1)).join("");
+    $$("#r2Pool .ocard").forEach(c=>c.onclick=e=>{if(e.target.closest(".nw"))return;seq.push(+c.dataset.i);S.set("r2",seq);S.set("r2c",0);draw();});
+    $$("#r2Seq .ocard").forEach(c=>c.onclick=e=>{if(e.target.closest(".nw"))return;seq.splice(seq.indexOf(+c.dataset.i),1);S.set("r2",seq);S.set("r2c",0);draw();});
+    if(S.get("r2c",0))mark();};
+  const mark=()=>{let ok=0;$$("#r2Seq .ocard").forEach((c,k)=>{const g=+c.dataset.i===k;c.classList.add(g?"ok":"bad");if(g)ok++;});
+    const full=seq.length===R2.length;$("#r2Res").className="msg "+(ok===R2.length?"ok":"bad");
+    $("#r2Res").textContent=full?(ok===R2.length?"完全正确！ Порядок верный.":`На своём месте: ${ok} из ${R2.length}. Перечитайте текст и поправьте красные карточки.`):`Разложите все ${R2.length} событий.`;
+    prog("r2",ok===R2.length?1:0,1);};
+  $("#r2Check").onclick=()=>{S.set("r2c",1);mark();};
+  $("#r2Clr").onclick=()=>{seq=[];S.set("r2",seq);S.set("r2c",0);$("#r2Res").textContent="";prog("r2",0,1);draw();};
+  draw();if(!S.get("r2c",0))prog("r2",0,1);
+}
+
+/* ========== Р3: переписка ========== */
+const R3=[
+ ["王朋","昨天安娜太{倒霉}了！哈哈！","Zuótiān Ānnà tài dǎoméi le! Hāha!","Вчера Анне так не повезло! Ха-ха!"],
+ ["小李","{怎么了}？","Zěnme le?","Что случилось?",1],
+ ["王朋","星期五我给她打电话，说“四点见”。可是她没听§0§，{把}“四点”听§1§了“十点”。","Xīngqīwǔ wǒ gěi tā dǎ diànhuà, shuō “sì diǎn jiàn”. Kěshì tā méi tīng ___, bǎ “sì diǎn” tīng ___ le “shí diǎn”.","В пятницу я позвонил ей и сказал: «Встречаемся в четыре». Но она не расслышала и услышала «в четыре» как «в десять»."],
+ ["王朋","星期六早上，闹钟响了，她关§2§了闹钟，又睡§3§了。","Xīngqīliù zǎoshang, nàozhōng xiǎng le, tā guān ___ le nàozhōng, yòu shuì ___ le.","В субботу утром зазвонил будильник — она его выключила и снова уснула."],
+ ["小李","哈哈哈！","Hāhāhā!","Ха-ха-ха!",1],
+ ["王朋","她的手机也{不见了}，她找了二十分钟才找§4§。","Tā de shǒujī yě bú jiàn le, tā zhǎole èrshí fēnzhōng cái zhǎo ___.","Ещё и телефон пропал — она искала его двадцать минут и только потом нашла."],
+ ["王朋","她§5§吃早饭就出门了。在地铁里，她还坐§6§了车！","Tā ___ chī zǎofàn jiù chūmén le. Zài dìtiě lǐ, tā hái zuò ___ le chē!","Она ушла из дома без завтрака. А в метро ещё и села не на тот поезд!"],
+ ["小李","{笑}死我了！{然后}呢？","Xiào sǐ wǒ le! Ránhòu ne?","Умираю со смеху! А дальше?",1],
+ ["王朋","她十点四十给我打电话，我还在睡觉呢。我说：“你听§7§了！是下午四点！”","Tā shí diǎn sìshí gěi wǒ dǎ diànhuà, wǒ hái zài shuìjiào ne. Wǒ shuō: “Nǐ tīng ___ le! Shì xiàwǔ sì diǎn!”","Она позвонила мне в 10:40, а я ещё спал. Я сказал: «Ты ослышалась! В четыре часа дня!»"],
+ ["王朋","下午看京剧的时候，演员唱的是什么，她都没听§8§。可是脸谱的颜色她看§9§了。","Xiàwǔ kàn jīngjù de shíhou, yǎnyuán chàng de shì shénme, tā dōu méi tīng ___. Kěshì liǎnpǔ de yánsè tā kàn ___ le.","Днём на опере она так и не поняла, о чём поют актёры. Зато что значат цвета масок — поняла."],
+ ["王朋","晚上她给我{发}{微信}：“今天我学§10§了一个新词：倒霉！”","Wǎnshang tā gěi wǒ fā Wēixìn: “Jīntiān wǒ xué ___ le yí ge xīn cí: dǎoméi!”","Вечером она написала мне в WeChat: «Сегодня я выучила новое слово: 倒霉!»"],
+ ["王朋","{下次}打电话，我{一定}要说§11§：“下——午——四——点！”","Xià cì dǎ diànhuà, wǒ yídìng yào shuō ___: “Xià—wǔ—sì—diǎn!”","В следующий раз по телефону обязательно скажу чётко: «В че-ты-ре ча-са дня!»"]
+];
+const R3G=[
+ [["清楚","干净","光"],"清楚","没听清楚 — расслышала нечётко. Звук она слышала, но не разобрала."],
+ [["成","到","完"],"成","A приняли за B — 把…听成…"],
+ [["掉","走","开"],"掉","Выключить — 关掉."],
+ [["着","见","好"],"着","Снова уснула — 睡着."],
+ [["到","完","懂"],"到","Результат поиска — 找到."],
+ [["没","不","了"],"没","Прошлое, действия не было — 没吃."],
+ [["错","对","好"],"错","Села не на тот поезд — 坐错."],
+ [["错","懂","见"],"错","Ослышалась — 听错."],
+ [["懂","见","完"],"懂","Звуки она слышала, а смысл не поняла — 没听懂."],
+ [["懂","光","开"],"懂","Поняла, что значат цвета, — 看懂."],
+ [["会","好","完"],"会","Освоила, выучила новое — 学会."],
+ [["清楚","干净","对"],"清楚","Сказать чётко, чтобы не перепутали, — 说清楚."]
+];
+function initR3(){
+  const st=S.get("r3",{});
+  $("#r3Wrap").innerHTML=`<div class="top"><span class="zh">王朋 → 小李</span> · WeChat</div>`+R3.map((m,i)=>`<div class="bub${m[4]?"":" me"}" data-i="${i}"><div class="who">${m[0]}</div><div class="zl">${mk(m[1]).replace(/§(\d+)§/g,(x,g)=>`<button class="gp${st[g]?" set":""}" data-g="${g}">${st[g]||"＿＿"}</button>`)}</div><span class="py">${m[2]}</span><span class="tr">${m[3]}</span><div class="rfb"></div></div>`).join("");
+  $$("#r3Wrap .gp").forEach(b=>b.onclick=e=>{e.stopPropagation();const g=+b.dataset.g;
+    openPop(b,"выберите",shuffle(R3G[g][0]),v=>{st[g]=v;S.set("r3",st);b.textContent=v;b.className="gp set";const bb=b.closest(".bub");bb.classList.remove("chk");});});
+  $("#r3Check").onclick=()=>r3Check(false);
+  $("#r3Clr").onclick=()=>{S.set("r3",{});S.set("r3c",0);$("#r3Res").textContent="";initR3();};
+  if(S.get("r3c",0))r3Check(true);else prog("r3",0,R3G.length);
+}
+function r3Check(silent){
+  const st=S.get("r3",{});let ok=0;S.set("r3c",1);
+  $$("#r3Wrap .bub").forEach(bb=>{const gs=$$(".gp",bb);if(!gs.length)return;const fb=[];
+    gs.forEach(b=>{const g=+b.dataset.g,v=st[g];b.classList.remove("ok","bad");if(!v)return;const good=v===R3G[g][1];if(good)ok++;b.classList.add(good?"ok":"bad");fb.push((good?"✓ ":"✗ нужно <b class='zh'>"+R3G[g][1]+"</b>: ")+R3G[g][2]);});
+    $(".rfb",bb).innerHTML=fb.join("<br>");bb.classList.toggle("chk",fb.length>0);});
+  if(!silent){$("#r3Res").className="msg "+(ok===R3G.length?"ok":"bad");$("#r3Res").textContent=`Верно: ${ok} из ${R3G.length}`;}
+  prog("r3",ok,R3G.length);
+}
+
+/* ========== письмо ========== */
+const W=[
+ ["你今天[吃完]早饭了吗？早饭吃了什么？","Nǐ jīntiān chīwán zǎofàn le ma? Zǎofàn chīle shénme?","Вы сегодня уже позавтракали? Что ели?","完 · 了"],
+ ["你[学会]做什么中国菜了？{还}想[学会]什么？","Nǐ xuéhuì zuò shénme Zhōngguó cài le? Hái xiǎng xuéhuì shénme?","Какое китайское блюдо вы научились готовить? Чему ещё хотите научиться?","会"],
+ ["上汉语课的时候，老师说的话你都[听懂]了吗？什么没听懂？","Shàng Hànyǔ kè de shíhou, lǎoshī shuō de huà nǐ dōu tīngdǒng le ma? Shénme méi tīngdǒng?","На уроке китайского вы понимаете всё, что говорит преподаватель? Что не поняли?","懂 · 没"],
+ ["你[找不到]手机的时候，怎么办？","Nǐ zhǎo bu dào shǒujī de shíhou, zěnme bàn?","Что вы делаете, когда не можете найти телефон?","到"],
+ ["你常常[写错]什么字？{为什么}？","Nǐ chángcháng xiěcuò shénme zì? Wèishénme?","Какие иероглифы вы часто пишете с ошибкой? Почему?","错"],
+ ["你有没有{倒霉}的一天？那天你没听见什么、没找到什么、[坐错]了什么？","Nǐ yǒu méiyǒu dǎoméi de yì tiān? Nà tiān nǐ méi tīngjiàn shénme, méi zhǎodào shénme, zuòcuòle shénme?","Был ли у вас невезучий день? Что вы тогда не услышали, не нашли, перепутали? Напишите 4–5 предложений.","не меньше 4 разных морфем"]
+];
+function initW(){
+  const st=S.get("w",{});
+  $("#wWrap").innerHTML=W.map((q,i)=>`<div class="wq"><div class="q"><span class="n" style="display:inline-block;width:24px;height:24px;border:1.4px solid var(--ink);border-radius:50%;text-align:center;font:800 12px/21px var(--sans);margin-right:6px;background:var(--paper)">${i+1}</span>${mk(q[0])}<small>${q[3]}</small></div><span class="py">${q[1]}</span><span class="tr">${q[2]}</span><textarea class="inp" data-i="${i}" placeholder="你的回答……">${esc(st[i]||"")}</textarea></div>`).join("");
+  $$("#wWrap textarea").forEach(t=>t.oninput=()=>{st[t.dataset.i]=t.value;S.set("w",st);});
+}
+
+/* ========== фон: лепестки и звёздочки ========== */
+function initSky(){
+  const sky=$("#sky");let h="";
+  const pet=c=>`<svg viewBox="0 0 20 26"><path d="M10 1 C17 6 19 15 14 22 C12 25 8 25 6 22 C1 15 3 6 10 1Z" fill="${c}" stroke="rgba(54,43,31,.25)" stroke-width=".6"/><path d="M10 4 C9 11 9 17 10 23" stroke="rgba(255,255,255,.5)" stroke-width=".7" fill="none"/></svg>`;
+  const cols=["#d9aaa2","#c9938c","#e6c7bd","#d8cbb6","#bfae8c"];
+  for(let i=0;i<14;i++){const s=10+Math.random()*12;h+=`<div class="petal" style="left:${Math.random()*100}vw;width:${s}px;height:${s*1.3}px;animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*25}s"><div style="width:100%;height:100%;animation:sway ${3+Math.random()*3}s ease-in-out infinite alternate">${pet(cols[i%cols.length])}</div></div>`;}
+  for(let i=0;i<9;i++){h+=`<div class="spk" style="left:${Math.random()*96}vw;top:${Math.random()*96}vh;animation-delay:${-Math.random()*4}s;width:${12+Math.random()*16}px;height:${12+Math.random()*16}px"><svg viewBox="0 0 20 20"><path d="M10 1 C11 7 13 9 19 10 C13 11 11 13 10 19 C9 13 7 11 1 10 C7 9 9 7 10 1Z" fill="none" stroke="#1a1a1a" stroke-width="1.3"/></svg></div>`;}
+  sky.innerHTML=h;
+}
+function initReveal(){
+  const els=$$(".reveal");if(!("IntersectionObserver" in window)){els.forEach(e=>e.classList.add("in"));return;}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{rootMargin:"0px 0px -60px 0px"});
+  els.forEach(e=>io.observe(e));
+}
+
+/* ========== старт ========== */
+$("#r3").dataset.tr="0";
+initTg();initDict();initAsp();initCatalog();initP1();initP2();initP3();initP4();initMem();if(S.get("memDone",0))prog("p5",1,1);else prog("p5",0,1);
+initRead();initR1();initR2();initR3();initW();initSky();applyTg();initReveal();
+$("#memNew").onclick=initMem;
+
+</script>
+</body>
+</html>
